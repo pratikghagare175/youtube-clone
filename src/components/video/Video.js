@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import moment from "moment";
+import numeral from "numeral";
+import axios from "../../Axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
@@ -12,17 +15,17 @@ import Zoom from "@material-ui/core/Zoom";
 const useStyles = makeStyles((theme) => ({
   card: {
     maxWidth: 245,
+    maxHeight: 260,
     background: "#16181B",
-    margin: "auto",
     transition: "0.3s",
-    marginBottom: "1.6rem",
-    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+    marginBottom: "1.5rem",
+    boxShadow: "0 2px 20px -12px rgba(0,0,0,0.3)",
     "&:hover": {
-      boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
+      boxShadow: "0 8px 50px -12.125px rgba(0,0,0,0.3)",
     },
   },
   media: {
-    paddingTop: "60%",
+    paddingTop: "65%",
   },
 
   heading: {
@@ -44,43 +47,88 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //https://i.ytimg.com/vi/bmVKaAV_7-A/hq720_live.jpg?sqp=CNjf1IUG-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAn49C9HjMqhp8iyQLJ1kCeHMvNuA
-const Video = () => {
+const Video = ({ video }) => {
   const classes = useStyles();
+  const [views, setViews] = useState(null);
+  const [duration, setDuration] = useState(null);
+  const [channelIcon, setChannelIcon] = useState(null);
+
+  const {
+    id,
+    snippet: {
+      publishedAt,
+      channelId,
+      channelTitle,
+      title,
+      thumbnails: { medium },
+    },
+  } = video;
+
+  const seconds = moment.duration(duration).asSeconds();
+  const _duration = moment.utc(seconds * 1000).format("mm:ss");
+
+  const _videoId = id?.videoId || id;
+
+  useEffect(() => {
+    const getVideoDetails = async () => {
+      const {
+        data: { items },
+      } = await axios("/videos", {
+        params: {
+          part: "contentDetails,statistics",
+          id: _videoId,
+        },
+      });
+      setDuration(items[0].contentDetails.duration);
+      setViews(items[0].statistics.viewCount);
+    };
+
+    getVideoDetails();
+  }, [_videoId]);
+
+  useEffect(() => {
+    const getChannelDetails = async () => {
+      const {
+        data: { items },
+      } = await axios("/channels", {
+        params: {
+          part: "snippet",
+          id: channelId,
+        },
+      });
+      setChannelIcon(items[0].snippet.thumbnails.medium.url);
+    };
+
+    getChannelDetails();
+  }, [channelId]);
 
   return (
     <div>
       <Card className={classes.card}>
         <div style={{ position: "relative" }}>
-          <CardMedia
-            className={classes.media}
-            image={"https://image.freepik.com/free-photo/river-foggy-mountains-landscape_1204-511.jpg"}
-          />
-          <span className={classes.duration}>11:30</span>
+          <CardMedia className={classes.media} image={medium.url} />
+          <span className={classes.duration}>{_duration}</span>
         </div>
 
         <CardContent className={classes.content}>
           <Grid container spacing={0}>
             <Grid item xs={3}>
-              <Avatar
-                className={classes.avatar}
-                key="hi"
-                src="https://cdn2.iconfinder.com/data/icons/business-and-finance-related-hand-gestures/256/face_human_blank_user_avatar_mannequin_dummy-512.png"
-              />
+              <Avatar className={classes.avatar} key="hi" src={channelIcon} />
             </Grid>
             <Grid item xs={9}>
-              <Tooltip
-                title="Nature Around Us jsfojsdofdjfodfsdfsdfsdff"
-                TransitionComponent={Zoom}
-                placement="bottom-end"
-              >
+              <Tooltip title={title} TransitionComponent={Zoom} placement="bottom-end">
                 <Typography noWrap className={classes.heading} gutterBottom>
-                  Nature Around Us jsfojsdofdjfodfsdfsdfsdff
+                  {title}
                 </Typography>
               </Tooltip>
 
-              <Typography className={classes.channelName}>Channel Name</Typography>
+              <Typography noWrap className={classes.channelName}>
+                {channelTitle}
+              </Typography>
 
-              <Typography variant={"caption"}>107K views • 2 years ago</Typography>
+              <Typography variant={"caption"}>
+                {numeral(views).format("0.aa")} views • {moment(publishedAt).fromNow()}
+              </Typography>
             </Grid>
           </Grid>
         </CardContent>

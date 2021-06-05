@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,15 +14,10 @@ import LikedIcon from "@material-ui/icons/ThumbUp";
 import HistoryIcon from "@material-ui/icons/History";
 import LibraryIcon from "@material-ui/icons/LibraryBooks";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
-import HomeScreen from "../pages/homescreen/HomeScreen";
 
 const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-
   toolbarMargin: {
     ...theme.mixins.toolbar,
     marginBottom: "4rem",
@@ -59,19 +54,11 @@ const useStyles = makeStyles((theme) => ({
     overflowX: "hidden",
     width: theme.spacing(7) + 1,
     [theme.breakpoints.down("md")]: {
+      width: theme.spacing(6),
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
-    },
-  },
-
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(2),
-    [theme.breakpoints.down("md")]: {
-      flexGrow: 1,
-      marginLeft: theme.spacing(3),
     },
   },
 
@@ -94,7 +81,7 @@ const SideBar = ({ open }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div>
       <CssBaseline />
 
       <Drawer
@@ -155,9 +142,6 @@ const SideBar = ({ open }) => {
           <Divider />
         </List>
       </Drawer>
-      <div className={classes.content}>
-        <HomeScreen />
-      </div>
     </div>
   );
 };

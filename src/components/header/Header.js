@@ -35,6 +35,7 @@ const ElevationScroll = (props) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginBottom: theme.spacing(6),
   },
   toolbar: {
     minHeight: 128,
@@ -48,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
   },
   appbar: {
     zIndex: theme.zIndex.modal + 1,
-    // height: "10vh",
   },
 
   toolbarMargin: {
@@ -151,6 +151,13 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     marginRight: theme.spacing(2),
   },
+
+  categoryBar: {
+    marginLeft: "230px",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
 }));
 
 const Header = ({ handleToggleSidebar }) => {
@@ -219,7 +226,7 @@ const Header = ({ handleToggleSidebar }) => {
                 src="https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png"
               />
             </ToolBar>
-            <div style={{ marginLeft: "230px" }}>
+            <div className={classes.categoryBar}>
               <CategoriesBar />
             </div>
           </AppBar>
