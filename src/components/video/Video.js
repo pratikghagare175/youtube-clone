@@ -15,7 +15,7 @@ import Zoom from "@material-ui/core/Zoom";
 const useStyles = makeStyles((theme) => ({
   card: {
     maxWidth: 245,
-    maxHeight: 260,
+    maxHeight: 270,
     background: "#16181B",
     transition: "0.3s",
     marginBottom: "1.5rem",
@@ -127,7 +127,7 @@ const Video = ({ video }) => {
               </Typography>
 
               <Typography variant={"caption"}>
-                {numeral(views).format("0.aa")} views • {moment(publishedAt).fromNow()}
+                {numeral(views).format("0.aa").toUpperCase()} views • {moment(publishedAt).fromNow()}
               </Typography>
             </Grid>
           </Grid>

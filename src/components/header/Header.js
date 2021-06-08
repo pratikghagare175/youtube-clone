@@ -200,7 +200,7 @@ const Header = ({ handleToggleSidebar }) => {
                 </div>
                 <InputBase
                   placeholder="Search…"
-                  fullWidth="true"
+                  fullWidth={true}
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,

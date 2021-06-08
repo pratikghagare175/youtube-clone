@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { useDispatch } from "react-redux";
-import { fetchVideoByCategory } from "../../redux/slices/homeVideosSlice";
+import { fetchPopularVideos, fetchVideoByCategory } from "../../redux/slices/homeVideosSlice";
 
 const useStyles = makeStyles((theme) => ({
   categoriesBar: {
@@ -58,8 +58,9 @@ const CategoriesBar = () => {
   const dispatch = useDispatch();
 
   const handleActiveElement = (value) => {
-    dispatch(fetchVideoByCategory({ keyword: value }));
     setActiveElement(value);
+    if (value === "All") dispatch(fetchPopularVideos());
+    else dispatch(fetchVideoByCategory({ keyword: value }));
   };
 
   return (

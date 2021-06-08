@@ -3,7 +3,7 @@ import axios from "../../Axios";
 
 export const fetchPopularVideos = createAsyncThunk(
   "youtube/fetchPopularVideos",
-  async (payload, { rejectWithValue }) => {
+  async (payload, { getState, rejectWithValue }) => {
     try {
       const { data } = await axios("/videos", {
         params: {
@@ -11,7 +11,7 @@ export const fetchPopularVideos = createAsyncThunk(
           chart: "mostPopular",
           regionCode: "IN",
           maxResults: 20,
-          pageToken: "",
+          pageToken: getState().homeVideos.nextPageToken,
         },
       });
       return {
@@ -57,15 +57,16 @@ const homeVideosSlice = createSlice({
     nextPageToken: null,
     activeCategory: "All",
   },
+
   extraReducers: {
     //? Get All Popular videos
     [fetchPopularVideos.pending]: (state, action) => {
       state.loading = true;
     },
     [fetchPopularVideos.fulfilled]: (state, action) => {
-      const { videos, nextPageToken } = action.payload;
+      const { videos, nextPageToken, category } = action.payload;
       state.loading = false;
-      state.videos = videos;
+      state.videos = state.activeCategory === category ? [...state.videos, ...videos] : videos;
       state.nextPageToken = nextPageToken;
     },
     [fetchPopularVideos.rejected]: (state, action) => {
@@ -79,7 +80,7 @@ const homeVideosSlice = createSlice({
     [fetchVideoByCategory.fulfilled]: (state, action) => {
       const { videos, nextPageToken, category } = action.payload;
       state.loading = false;
-      state.videos = videos;
+      state.videos = state.activeCategory === category ? [...state.videos, ...videos] : videos;
       state.nextPageToken = nextPageToken;
       state.activeCategory = category;
     },

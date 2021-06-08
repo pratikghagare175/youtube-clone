@@ -13,7 +13,6 @@ import Login from "./components/pages/login/Login";
 const useStyles = makeStyles((theme) => ({
   app_container: {
     display: "flex",
-    height: "80vh",
   },
 }));
 
@@ -30,9 +29,7 @@ const Layout = ({ children }) => {
         <Header handleToggleSidebar={handleToggleSidebar} />
         <div className={classes.app_container}>
           <SideBar open={toggleSidebar} />
-          <Container maxWidth="lg" className={classes.main_container}>
-            {children}
-          </Container>
+          <Container maxWidth="lg">{children}</Container>
         </div>
       </ThemeProvider>
     </>
