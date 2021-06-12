@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 //https://i.ytimg.com/vi/bmVKaAV_7-A/hq720_live.jpg?sqp=CNjf1IUG-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAn49C9HjMqhp8iyQLJ1kCeHMvNuA
 const Video = ({ video }) => {
   const classes = useStyles();
+
   const [views, setViews] = useState(null);
   const [duration, setDuration] = useState(null);
   const [channelIcon, setChannelIcon] = useState(null);
@@ -110,10 +111,10 @@ const Video = ({ video }) => {
           <span className={classes.duration}>{_duration}</span>
         </div>
 
-        <CardContent className={classes.content}>
+        <CardContent>
           <Grid container spacing={0}>
             <Grid item xs={3}>
-              <Avatar className={classes.avatar} key="hi" src={channelIcon} />
+              <Avatar key="hi" src={channelIcon} />
             </Grid>
             <Grid item xs={9}>
               <Tooltip title={title} TransitionComponent={Zoom} placement="bottom-end">

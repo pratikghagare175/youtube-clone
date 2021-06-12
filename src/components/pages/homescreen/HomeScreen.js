@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Video from "../../video/Video";
 import InfiniteScroll from "react-infinite-scroll-component";
+import VideoSkeleton from "../../videoSkeleton/VideoSkeleton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +25,7 @@ const HomeScreen = () => {
     dispatch(fetchPopularVideos());
   }, [dispatch]);
 
-  const { videos, activeCategory } = useSelector((state) => state.homeVideos);
+  const { videos, activeCategory, loading } = useSelector((state) => state.homeVideos);
   const fetchData = () => {
     if (activeCategory === "All") dispatch(fetchPopularVideos());
     else dispatch(fetchVideoByCategory({ keyword: activeCategory }));
@@ -40,11 +41,17 @@ const HomeScreen = () => {
           style={{ overflow: "hidden" }}
         >
           <Grid container spacing={2}>
-            {videos.map((video) => (
-              <Grid item className={classes.card_grid} key={video.id}>
-                <Video video={video} />
-              </Grid>
-            ))}
+            {loading
+              ? [...Array(20)].map((item, index) => (
+                  <Grid item xs={3} className={classes.card_grid} key={index}>
+                    <VideoSkeleton />
+                  </Grid>
+                ))
+              : videos.map((video) => (
+                  <Grid item className={classes.card_grid} key={video.id}>
+                    <Video video={video} />
+                  </Grid>
+                ))}
           </Grid>
         </InfiniteScroll>
       </Container>
