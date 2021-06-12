@@ -59,7 +59,7 @@ const homeVideosSlice = createSlice({
   },
 
   extraReducers: {
-    //? Get All Popular videos
+    //? Thunk To Get All Popular videos
     [fetchPopularVideos.pending]: (state, action) => {
       state.loading = true;
     },
@@ -73,7 +73,7 @@ const homeVideosSlice = createSlice({
       state.loading = false;
     },
 
-    //? Get Videos By Category
+    //? Thunk To Get Videos By Category
     [fetchVideoByCategory.pending]: (state, action) => {
       state.loading = true;
     },
@@ -83,6 +83,9 @@ const homeVideosSlice = createSlice({
       state.videos = state.activeCategory === category ? [...state.videos, ...videos] : videos;
       state.nextPageToken = nextPageToken;
       state.activeCategory = category;
+    },
+    [fetchVideoByCategory.rejected]: (state, action) => {
+      state.loading = false;
     },
   },
 });
