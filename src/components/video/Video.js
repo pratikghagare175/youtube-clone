@@ -11,6 +11,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+// import "./video.css";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -33,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
   },
   duration: {
     position: "absolute",
-    bottom: "0.3rem",
+    textAlign: "center",
+    bottom: "0.6rem",
+    opacity: "0.9",
     right: "0.5rem",
     padding: "0.2rem",
     backgroundColor: "#080808",
@@ -107,7 +111,10 @@ const Video = ({ video }) => {
     <div>
       <Card className={classes.card}>
         <div style={{ position: "relative" }}>
-          <CardMedia className={classes.media} image={medium.url} />
+          <CardMedia
+            className={classes.media}
+            component={() => <LazyLoadImage effect="blur" src={medium.url} style={{ width: "100%" }} />}
+          ></CardMedia>
           <span className={classes.duration}>{_duration}</span>
         </div>
 
