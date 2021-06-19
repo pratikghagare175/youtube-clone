@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import HomeScreen from "./components/pages/homescreen/HomeScreen";
 import Login from "./components/pages/login/Login";
+import WatchScreen from "./components/pages/watchScreen/WatchScreen";
 
 const useStyles = makeStyles((theme) => ({
   app_container: {
@@ -50,6 +51,11 @@ const App = () => {
       <Route path="/search" exact>
         <Layout>
           <h1>Searching</h1>
+        </Layout>
+      </Route>
+      <Route path="/watch/:id" exact>
+        <Layout>
+          <WatchScreen />
         </Layout>
       </Route>
 
