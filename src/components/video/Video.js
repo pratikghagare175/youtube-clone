@@ -12,7 +12,6 @@ import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-// import "./video.css";
 
 const useStyles = makeStyles((theme) => ({
   card: {
