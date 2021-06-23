@@ -12,11 +12,20 @@ const useStyles = makeStyles((theme) => ({
   card: {
     marginBottom: "2rem",
     marginRight: "2rem",
+    [theme.breakpoints.down("md")]: {
+      marginRight: "0",
+      marginBottom: "1rem",
+      marginTop: "-1rem",
+    },
   },
   player: {
     height: "60vh",
     width: "100%",
     backgroundColor: "#353946",
+    [theme.breakpoints.down("md")]: {
+      height: "30vh",
+      width: "100%",
+    },
   },
 }));
 
