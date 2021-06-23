@@ -12,15 +12,18 @@ import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    //flexGrow: 1,
   },
-  gItem: {
-    border: "1px solid yellow",
-  },
+
   likes: {
     float: "right",
     marginRight: "-1.5rem",
     marginTop: "-0.4rem",
+    [theme.breakpoints.down("md")]: {
+      float: "none",
+      marginTop: "0.6rem",
+      marginRight: "0",
+    },
   },
   divider: {
     background: "#e0e0e0",
@@ -40,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginTop: "0.3rem",
     marginRight: "1.7rem",
+    [theme.breakpoints.down("md")]: {
+      marginTop: "-2.7rem",
+      marginRight: "0.7rem",
+    },
   },
 }));
 
@@ -95,6 +102,14 @@ const VideoMetaData = () => {
         </Grid>
       </Grid>
       <Divider classes={{ root: classes.divider }} />
+      <Grid container>
+        <Grid item xs={12} style={{ marginBottom: "0.5rem" }}>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium, at eius dolor odio autem,
+          impedit necessitatibus accusamus odit neque quis a pariatur distinctio animi dicta repudiandae
+          adipisci placeat accusantium, expedita quo amet. Nostrum, similique atque est iste rerum
+          corrupti nemo culpa, illum molestiae quas, facilis vel quasi cum ad facere.
+        </Grid>
+      </Grid>
     </div>
   );
 };
