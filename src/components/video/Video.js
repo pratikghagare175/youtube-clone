@@ -15,15 +15,21 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const useStyles = makeStyles((theme) => ({
   card: {
+
     maxWidth: 245,
-    maxHeight: 270,
+    maxHeight: 260,
     background: "#16181B",
     transition: "0.3s",
+    marginLeft:"auto",
     marginBottom: "1.5rem",
     boxShadow: "0 2px 20px -12px rgba(0,0,0,0.3)",
     "&:hover": {
       boxShadow: "0 8px 50px -12.125px rgba(0,0,0,0.3)",
     },
+    [theme.breakpoints.down("md")]:{
+      maxWidth: 250,
+       width:"100%",
+    }
   },
   media: {
     paddingTop: "65%",
