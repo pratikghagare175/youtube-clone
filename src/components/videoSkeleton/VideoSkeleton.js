@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 270,
     background: "#16181B",
     transition: "0.3s",
+    marginLeft:"auto",
     marginBottom: "1.5rem",
     boxShadow: "0 2px 20px -12px rgba(0,0,0,0.3)",
     "&:hover": {
