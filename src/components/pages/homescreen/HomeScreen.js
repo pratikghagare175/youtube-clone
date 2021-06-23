@@ -11,6 +11,8 @@ import VideoSkeleton from "../../videoSkeleton/VideoSkeleton";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    alignContent:"center",
+    width:"100%"
   },
   card_grid: {
     flexGrow: 1,
@@ -32,7 +34,7 @@ const HomeScreen = () => {
   };
   return (
     <>
-      <Container maxWidth="lg" className={classes.root}>
+      <Container maxWidth="lg" >
         <InfiniteScroll
           dataLength={videos.length}
           next={fetchData}
@@ -40,7 +42,7 @@ const HomeScreen = () => {
           // loader={<Box color="text.default"></Box>}
           style={{ overflow: "hidden" }}
         >
-          <Grid container spacing={2}>
+          <Grid container spacing={2} className={classes.root}>
             {loading
               ? [...Array(20)].map((item, index) => (
                   <Grid item xs={3} className={classes.card_grid} key={index}>
