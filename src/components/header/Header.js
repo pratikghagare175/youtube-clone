@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     marginBottom: theme.spacing(6),
+    [theme.breakpoints.down("md")]: {
+      marginBottom: theme.spacing(3),
+    },
   },
   toolbar: {
     minHeight: 128,
