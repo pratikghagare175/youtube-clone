@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import numeral from "numeral";
 import moment from "moment";
@@ -43,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginTop: "0.3rem",
     marginRight: "1.7rem",
+    borderRadius: "0",
+
     [theme.breakpoints.down("md")]: {
       marginTop: "-2.7rem",
       marginRight: "0.7rem",
@@ -52,6 +54,12 @@ const useStyles = makeStyles((theme) => ({
 
 const VideoMetaData = () => {
   const classes = useStyles();
+  const description = `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium, at eius dolor odio autem,
+          impedit necessitatibus accusamus odit neque quis a pariatur distinctio animi dicta repudiandae
+          adipisci placeat accusantium, expedita quo amet. Nostrum, similique atque est iste rerum
+          corrupti nemo culpa, illum molestiae quas, facilis vel quasi cum ad facere.`;
+  const [readMore, setReadMore] = useState(false);
+
   return (
     <div className={classes.root}>
       {/* Video Title And Views Section */}
@@ -104,12 +112,17 @@ const VideoMetaData = () => {
       <Divider classes={{ root: classes.divider }} />
       <Grid container>
         <Grid item xs={12} style={{ marginBottom: "0.5rem" }}>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium, at eius dolor odio autem,
-          impedit necessitatibus accusamus odit neque quis a pariatur distinctio animi dicta repudiandae
-          adipisci placeat accusantium, expedita quo amet. Nostrum, similique atque est iste rerum
-          corrupti nemo culpa, illum molestiae quas, facilis vel quasi cum ad facere.
+          {readMore ? description : description.substring(0, 200) + "......"}
+
+          <Button
+            onClick={() => setReadMore(!readMore)}
+            style={{ display: "block", marginTop: "0.5rem" }}
+          >
+            {readMore ? "Show Less" : "Show More"}
+          </Button>
         </Grid>
       </Grid>
+      <Divider classes={{ root: classes.divider }} />
     </div>
   );
 };
