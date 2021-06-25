@@ -12,7 +12,7 @@ import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    //flexGrow: 1,
+    flexGrow: 1,
   },
 
   likes: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.down("md")]: {
       marginTop: "-2.7rem",
-      marginRight: "0.7rem",
+      marginRight: "1rem",
     },
   },
 }));
