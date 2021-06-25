@@ -11,7 +11,7 @@ import Comments from "../../comments/Comments";
 const useStyles = makeStyles((theme) => ({
   card: {
     marginBottom: "2rem",
-    marginRight: "2rem",
+    marginRight: "1.5rem",
     [theme.breakpoints.down("md")]: {
       marginRight: "0",
       marginBottom: "1rem",
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     backgroundColor: "#353946",
     [theme.breakpoints.down("md")]: {
-      height: "30vh",
+      height: "25vh",
       width: "100%",
     },
   },
