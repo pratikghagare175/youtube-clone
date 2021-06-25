@@ -9,18 +9,26 @@ import { useState, useRef } from "react";
 
 const useStyles = makeStyles((theme) => ({
   addComment: {
-    marginBottom: "2rem",
-    marginTop: "0.5rem",
+    marginBottom: "1.5rem",
+    marginTop: "0.6rem",
   },
 
   avatar: {
     margin: "0.5rem 0rem",
+    [theme.breakpoints.down("md")]: {
+      margin: "0rem 0.5rem",
+    },
   },
   commentInput: {
     width: "73ch",
     verticalAlign: "middle",
     marginLeft: "1rem",
     marginTop: "-2.5rem",
+    [theme.breakpoints.down("md")]: {
+      width: "30ch",
+      marginLeft: "0.5rem",
+      marginTop: "-2.0rem",
+    },
   },
 
   commentBtn: {
@@ -83,6 +91,22 @@ const Comments = () => {
             </div>
           </Grid>
         )}
+      </Grid>
+      <Grid container style={{ marginBottom: "1rem" }}>
+        <Grid item>
+          <Avatar
+            alt="Remy Sharp"
+            src="https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png"
+          />
+        </Grid>
+        <Grid item>
+          <div style={{ marginLeft: "0.7rem", verticalAlign: "middle" }}>
+            <Typography variant="body2">
+              <strong>Pratik Ghagare</strong> a day ago
+            </Typography>
+            <Typography variant="body2">This is just a test Comment</Typography>
+          </div>
+        </Grid>
       </Grid>
     </>
   );
