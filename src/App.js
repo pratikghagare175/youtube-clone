@@ -6,7 +6,7 @@ import Header from "./components/header/Header";
 import SideBar from "./components/sidebar/SideBar";
 import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import HomeScreen from "./components/pages/homescreen/HomeScreen";
 import Login from "./components/pages/login/Login";
 import WatchScreen from "./components/pages/watchScreen/WatchScreen";
