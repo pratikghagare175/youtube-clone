@@ -75,11 +75,11 @@ const VideoMetaData = () => {
         <Grid item xs={12} sm={5}>
           <div className={classes.likes}>
             <Typography variant="body2" component="span" style={{ marginRight: "1rem" }}>
-              <LikeIcon style={{ verticalAlign: "middle" }} />
+              <LikeIcon style={{ verticalAlign: "middle", marginRight: "0.2rem" }} />
               {numeral(10000).format("0.aa").toUpperCase()}
             </Typography>
             <Typography variant="body2" component="span">
-              <DislikeIcon style={{ verticalAlign: "middle" }} />
+              <DislikeIcon style={{ verticalAlign: "middle", marginRight: "0.2rem" }} />
               {numeral(10000).format("0.aa").toUpperCase()}
             </Typography>
           </div>
