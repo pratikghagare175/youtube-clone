@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       marginRight: "0",
       marginBottom: "1rem",
-      marginTop: "-1rem",
+      marginTop: "1.5rem",
     },
   },
   player: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 const WatchScreen = () => {
   const classes = useStyles();
   return (
-    <div>
+    <div style={{ marginTop: "-3rem" }}>
       <Grid container>
         <Grid item lg={8}>
           <Card className={classes.card}>
