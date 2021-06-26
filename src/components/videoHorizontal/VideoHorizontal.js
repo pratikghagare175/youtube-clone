@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   card: {
-    maxWidth: 400,
+    maxWidth: 450,
     maxHeight: 300,
-    // background: "#16181B",
+    background: "#16181B",
     transition: "0.3s",
     marginBottom: "1rem",
     boxShadow: "0 2px 20px -12px rgba(0,0,0,0.3)",
@@ -46,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#080808",
     borderRadius: "3px",
   },
+  video_title: {
+    fontWeight: "bold",
+    color: "#fff",
+  },
 }));
 
 const VideoHorizontal = () => {
@@ -57,7 +61,7 @@ const VideoHorizontal = () => {
     <div className={classes.root}>
       <Card className={classes.card}>
         <Grid container>
-          <Grid item xs={4} md={4} style={{ width: "40%" }}>
+          <Grid item xs={4} md={4}>
             <div style={{ position: "relative", width: "120px" }}>
               <CardMedia
                 className={classes.media}
@@ -72,8 +76,18 @@ const VideoHorizontal = () => {
               <span className={classes.duration}>{_duration}</span>
             </div>
           </Grid>
-          <Grid item xs={8} md={8} style={{ width: "70%" }}>
-            This is gonna be the titile ssdfsdfsdfsdf
+          <Grid item xs={8} md={8}>
+            <div style={{ marginLeft: "0.2rem", marginTop: "0.3rem" }}>
+              <Typography variant="body2" noWrap className={classes.video_title}>
+                This is gonna be the titile ssdfsdfsdfsdf
+              </Typography>
+              <Typography variant="caption" noWrap style={{ display: "block" }}>
+                Pratik Ghagare
+              </Typography>
+              <Typography variant="caption">
+                {numeral(10000).format("0.aa").toUpperCase()} views • {moment("2021-06-20").fromNow()}
+              </Typography>
+            </div>
           </Grid>
         </Grid>
       </Card>
