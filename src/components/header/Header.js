@@ -14,8 +14,8 @@ import AppsIcon from "@material-ui/icons/Apps";
 import Badge from "@material-ui/core/Badge";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme, fade } from "@material-ui/core/styles";
+import { useLocation } from "react-router-dom";
+import { fade } from "@material-ui/core/styles";
 import youtubeLogo from "../../assets/yt-logo.png";
 import CategoriesBar from "../categoriesBar/CategoriesBar";
 
@@ -165,9 +165,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = ({ handleToggleSidebar }) => {
   const classes = useStyles();
-  const theme = useTheme();
-  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
-  // const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const location = useLocation();
 
   return (
     <>
@@ -229,9 +227,11 @@ const Header = ({ handleToggleSidebar }) => {
                 src="https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png"
               />
             </ToolBar>
-            <div className={classes.categoryBar}>
-              <CategoriesBar />
-            </div>
+            {location.pathname === "/" && (
+              <div className={classes.categoryBar}>
+                <CategoriesBar />
+              </div>
+            )}
           </AppBar>
           {/* <CategoriesBar /> */}
         </ElevationScroll>
