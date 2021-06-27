@@ -52,20 +52,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const VideoMetaData = () => {
+const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
   const classes = useStyles();
-  const description = `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium, at eius dolor odio autem,
-          impedit necessitatibus accusamus odit neque quis a pariatur distinctio animi dicta repudiandae
-          adipisci placeat accusantium, expedita quo amet. Nostrum, similique atque est iste rerum
-          corrupti nemo culpa, illum molestiae quas, facilis vel quasi cum ad facere.`;
+  // const description = `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium, at eius dolor odio autem,
+  //         impedit necessitatibus accusamus odit neque quis a pariatur distinctio animi dicta repudiandae
+  //         adipisci placeat accusantium, expedita quo amet. Nostrum, similique atque est iste rerum
+  //         corrupti nemo culpa, illum molestiae quas, facilis vel quasi cum ad facere.`;
   const [readMore, setReadMore] = useState(false);
+  const { publishedAt, channelId, title, description } = snippet;
 
   return (
     <div className={classes.root}>
       {/* Video Title And Views Section */}
       <Grid container style={{ marginBottom: "0.7rem" }}>
         <Grid item xs={12} style={{ marginBottom: "0.5rem" }}>
-          <Typography variant="h6">Video Title</Typography>
+          <Typography variant="h6">{title}</Typography>
         </Grid>
         <Grid item justify="space-between" alignItems="center" xs={12} sm={6}>
           <Typography variant="body2">
