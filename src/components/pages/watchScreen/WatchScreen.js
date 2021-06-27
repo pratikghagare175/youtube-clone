@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -7,6 +7,10 @@ import CardMedia from "@material-ui/core/CardMedia";
 import VideoMetaData from "../../videoMetaData/VideoMetaData";
 import VideoHorizontal from "../../videoHorizontal/VideoHorizontal";
 import Comments from "../../comments/Comments";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchVideoById } from "../../../redux/slices/watchScreenSlice";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -31,25 +35,36 @@ const useStyles = makeStyles((theme) => ({
 
 const WatchScreen = () => {
   const classes = useStyles();
+  const { videoId } = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchVideoById({ videoId }));
+  }, [dispatch, videoId]);
+
+  const { video, loading } = useSelector((state) => state.watchScreen);
+
   return (
     <div style={{ marginTop: "-3rem" }}>
       <Grid container>
         <Grid item lg={8}>
           <Card className={classes.card}>
             <CardActionArea>
+              {/* Pass the videoId to src attribute */}
               <CardMedia
                 component="iframe"
                 className={classes.player}
-                src="https://www.youtube.com/embed/tgbNymZ7vqY"
+                src={`https://www.youtube.com/embed/${videoId}`}
                 frameBorder="0"
-                title="New Video"
+                title={video?.snippet?.title}
                 allowFullScreen
                 width="100%"
                 height="100%"
               />
             </CardActionArea>
           </Card>
-          <VideoMetaData />
+          {!loading ? <VideoMetaData video={video} videoId={videoId} /> : <h6>Loading ...</h6>}
+
           <Comments />
         </Grid>
         <Grid item lg={4}>
