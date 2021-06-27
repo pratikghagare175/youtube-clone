@@ -11,8 +11,8 @@ import VideoSkeleton from "../../videoSkeleton/VideoSkeleton";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    alignContent:"center",
-    width:"100%"
+    alignContent: "center",
+    width: "100%",
   },
   card_grid: {
     flexGrow: 1,
@@ -34,7 +34,7 @@ const HomeScreen = () => {
   };
   return (
     <>
-      <Container maxWidth="lg" >
+      <Container maxWidth="lg">
         <InfiniteScroll
           dataLength={videos.length}
           next={fetchData}
