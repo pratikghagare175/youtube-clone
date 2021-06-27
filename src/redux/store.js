@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import logger from "redux-logger";
 import authReducer from "./slices/authSlice";
 import homeVideosReducer from "./slices/homeVideosSlice";
+import watchScreenReducer from "./slices/watchScreenSlice";
 
 export default configureStore({
   reducer: {
     auth: authReducer,
     homeVideos: homeVideosReducer,
+    watchScreen: watchScreenReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
