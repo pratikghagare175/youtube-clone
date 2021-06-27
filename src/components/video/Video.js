@@ -12,6 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -62,6 +63,7 @@ const Video = ({ video }) => {
   const [views, setViews] = useState(null);
   const [duration, setDuration] = useState(null);
   const [channelIcon, setChannelIcon] = useState(null);
+  const history = useHistory();
 
   const {
     id,
@@ -112,9 +114,13 @@ const Video = ({ video }) => {
     getChannelDetails();
   }, [channelId]);
 
+  const handleVideoClick = () => {
+    history.push(`/watch/${_videoId}`);
+  };
+
   return (
     <div>
-      <Card className={classes.card}>
+      <Card className={classes.card} onClick={handleVideoClick}>
         <div style={{ position: "relative" }}>
           <CardMedia
             className={classes.media}
