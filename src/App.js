@@ -53,7 +53,7 @@ const App = () => {
           <h1>Searching</h1>
         </Layout>
       </Route>
-      <Route path="/watch/:id" exact>
+      <Route path="/watch/:videoId" exact>
         <Layout>
           <WatchScreen />
         </Layout>
