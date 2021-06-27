@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../Axios";
 
 export const fetchPopularVideos = createAsyncThunk(
-  "youtube/fetchPopularVideos",
+  "yt_homescreen/fetchPopularVideos",
   async (payload, { getState, rejectWithValue }) => {
     try {
       const { data } = await axios("/videos", {
@@ -26,14 +26,14 @@ export const fetchPopularVideos = createAsyncThunk(
 );
 
 export const fetchVideoByCategory = createAsyncThunk(
-  "youtube/fetchPopularVideos",
+  "yt_homescreen/fetchPopularVideos",
   async ({ keyword }, { getState, rejectWithValue }) => {
     try {
       const { data } = await axios("/search", {
         params: {
           part: "snippet",
           maxResults: 20,
-          pageToken: getState().homeVideos.nextPageToken,
+          pageToken: getState().youtube.nextPageToken,
           q: keyword,
           type: "video",
         },
@@ -50,7 +50,7 @@ export const fetchVideoByCategory = createAsyncThunk(
 );
 
 const homeVideosSlice = createSlice({
-  name: "youtube",
+  name: "yt_homescreen",
   initialState: {
     videos: [],
     loading: false,
