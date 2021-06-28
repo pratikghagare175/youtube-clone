@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     marginBottom: theme.spacing(6),
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("xs")]: {
       marginBottom: theme.spacing(3),
     },
   },
@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "transparent",
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("xs")]: {
       display: "none",
     },
   },
@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     marginLeft: "auto",
     width: "500px",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("xs")]: {
       flex: "1",
     },
   },
@@ -166,6 +166,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = ({ handleToggleSidebar }) => {
   const classes = useStyles();
   const location = useLocation();
+  const path = location.pathname === "/";
 
   return (
     <>
@@ -227,11 +228,8 @@ const Header = ({ handleToggleSidebar }) => {
                 src="https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png"
               />
             </ToolBar>
-            {location.pathname === "/" && (
-              <div className={classes.categoryBar}>
-                <CategoriesBar />
-              </div>
-            )}
+
+            <div className={classes.categoryBar}>{path && <CategoriesBar />}</div>
           </AppBar>
           {/* <CategoriesBar /> */}
         </ElevationScroll>
