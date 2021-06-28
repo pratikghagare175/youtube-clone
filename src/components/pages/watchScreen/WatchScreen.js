@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -8,9 +9,7 @@ import VideoMetaData from "../../videoMetaData/VideoMetaData";
 import VideoHorizontal from "../../videoHorizontal/VideoHorizontal";
 import Comments from "../../comments/Comments";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { fetchVideoById } from "../../../redux/slices/watchScreenSlice";
-import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -40,6 +39,7 @@ const WatchScreen = () => {
 
   useEffect(() => {
     dispatch(fetchVideoById({ videoId }));
+    console.log("Use Effect Called");
   }, [dispatch, videoId]);
 
   const { video, loading } = useSelector((state) => state.watchScreen);
@@ -63,13 +63,13 @@ const WatchScreen = () => {
               />
             </CardActionArea>
           </Card>
-          {!loading ? <VideoMetaData video={video} videoId={videoId} /> : <h6>Loading ...</h6>}
+          <VideoMetaData video={video} videoId={videoId} />
 
           <Comments />
         </Grid>
         <Grid item lg={4}>
-          {[...Array(20)].map((item) => (
-            <VideoHorizontal />
+          {[...Array(20)].map((item, index) => (
+            <VideoHorizontal key={index} />
           ))}
         </Grid>
       </Grid>
