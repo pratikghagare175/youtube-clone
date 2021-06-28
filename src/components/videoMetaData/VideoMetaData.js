@@ -52,36 +52,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
+const VideoMetaData = ({ video, videoId }) => {
   const classes = useStyles();
-  // const description = `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium, at eius dolor odio autem,
-  //         impedit necessitatibus accusamus odit neque quis a pariatur distinctio animi dicta repudiandae
-  //         adipisci placeat accusantium, expedita quo amet. Nostrum, similique atque est iste rerum
-  //         corrupti nemo culpa, illum molestiae quas, facilis vel quasi cum ad facere.`;
+
   const [readMore, setReadMore] = useState(false);
-  const { publishedAt, channelId, title, description } = snippet;
+  // const { publishedAt, channelId, title, description } = video?.snippet;
+  // const { viewCount, likeCount, dislikeCount } =  video?.statistics;
 
   return (
     <div className={classes.root}>
       {/* Video Title And Views Section */}
       <Grid container style={{ marginBottom: "0.7rem" }}>
-        <Grid item xs={12} style={{ marginBottom: "0.5rem" }}>
-          <Typography variant="h6">{title}</Typography>
+        <Grid item xs={11} style={{ marginBottom: "0.9rem" }}>
+          <Typography variant="h6" style={{ wordWrap: "break-word" }}>
+            {video?.snippet.title}
+          </Typography>
         </Grid>
         <Grid item justify="space-between" alignItems="center" xs={12} sm={6}>
           <Typography variant="body2">
-            {numeral(10000).format("0.aa").toUpperCase()} views • {moment("2021-06-20").fromNow()}
+            {numeral(video?.statistics.viewCount).format("0.aa").toUpperCase()} views •
+            {moment(video?.statistics.publishedAt).fromNow()}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={5}>
           <div className={classes.likes}>
             <Typography variant="body2" component="span" style={{ marginRight: "1rem" }}>
               <LikeIcon style={{ verticalAlign: "middle", marginRight: "0.2rem" }} />
-              {numeral(10000).format("0.aa").toUpperCase()}
+              {numeral(video?.statistics.likeCount).format("0.aa").toUpperCase()}
             </Typography>
             <Typography variant="body2" component="span">
               <DislikeIcon style={{ verticalAlign: "middle", marginRight: "0.2rem" }} />
-              {numeral(10000).format("0.aa").toUpperCase()}
+              {numeral(video?.statistics.dislikeCount).format("0.aa").toUpperCase()}
             </Typography>
           </div>
         </Grid>
@@ -113,7 +114,9 @@ const VideoMetaData = ({ video: { snippet, statistics }, videoId }) => {
       <Divider classes={{ root: classes.divider }} />
       <Grid container>
         <Grid item xs={12} style={{ marginBottom: "0.5rem" }}>
-          {readMore ? description : description.substring(0, 200) + "......"}
+          {readMore
+            ? video?.snippet.description
+            : video?.snippet.description.substring(0, 200) + "......"}
 
           <Button
             onClick={() => setReadMore(!readMore)}
