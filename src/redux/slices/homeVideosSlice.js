@@ -33,7 +33,7 @@ export const fetchVideoByCategory = createAsyncThunk(
         params: {
           part: "snippet",
           maxResults: 20,
-          pageToken: getState().youtube.nextPageToken,
+          pageToken: getState().homeVideos.nextPageToken,
           q: keyword,
           type: "video",
         },
