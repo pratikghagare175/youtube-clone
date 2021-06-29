@@ -9,6 +9,10 @@ import DislikeIcon from "@material-ui/icons/ThumbDown";
 import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
+import { useEffect } from "react";
+import { fetchChannelInfo } from "../../redux/slices/watchScreenSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,9 +60,20 @@ const VideoMetaData = ({ video, videoId }) => {
   const classes = useStyles();
 
   const [readMore, setReadMore] = useState(false);
+  const dispatch = useDispatch();
   // const { publishedAt, channelId, title, description } = video?.snippet;
   // const { viewCount, likeCount, dislikeCount } =  video?.statistics;
 
+  const channelId = video?.snippet?.channelId;
+  useEffect(() => {
+    dispatch(fetchChannelInfo({ channelId }));
+  }, [dispatch, channelId]);
+
+  const { channel } = useSelector((state) => state.watchScreen);
+
+  const channelLogo = channel?.snippet?.thumbnails?.default?.url;
+  const channelTitle = channel?.snippet?.title;
+  const channelSubsCount = channel?.statistics?.subscriberCount;
   return (
     <div className={classes.root}>
       {/* Video Title And Views Section */}
@@ -91,18 +106,14 @@ const VideoMetaData = ({ video, videoId }) => {
       {/* Channel Meta Data */}
       <Grid container style={{ marginBottom: "0.6rem" }}>
         <Grid item xs={12} sm={6}>
-          <Avatar
-            alt="Remy Sharp"
-            src="https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png"
-            style={{ display: "inline-block" }}
-          />
+          <Avatar alt="Remy Sharp" src={channelLogo} style={{ display: "inline-block" }} />
           <div className={classes.channelName}>
             <Typography component="span" variant="body2">
-              Pratik Ghagare
+              {channelTitle}
             </Typography>
             <br />
             <Typography component="span" variant="body2">
-              1k Subscribers
+              {numeral(channelSubsCount).format("0.aa").toUpperCase()}
             </Typography>
           </div>
         </Grid>
