@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import numeral from "numeral";
 import moment from "moment";
@@ -9,8 +9,7 @@ import DislikeIcon from "@material-ui/icons/ThumbDown";
 import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import { useEffect } from "react";
-import { fetchChannelInfo } from "../../redux/slices/watchScreenSlice";
+import { checkSubscriptionStatus, fetchChannelInfo } from "../../redux/slices/watchScreenSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -54,6 +53,20 @@ const useStyles = makeStyles((theme) => ({
       marginRight: "1rem",
     },
   },
+  subscribed: {
+    backgroundColor: "#5e6668",
+    color: "#FFFFFF",
+    float: "right",
+    alignItems: "center",
+    marginTop: "0.3rem",
+    marginRight: "1.7rem",
+    borderRadius: "0",
+
+    [theme.breakpoints.down("md")]: {
+      marginTop: "-2.7rem",
+      marginRight: "1rem",
+    },
+  },
 }));
 
 const VideoMetaData = ({ video, videoId }) => {
@@ -67,9 +80,11 @@ const VideoMetaData = ({ video, videoId }) => {
   const channelId = video?.snippet?.channelId;
   useEffect(() => {
     dispatch(fetchChannelInfo({ channelId }));
+    dispatch(checkSubscriptionStatus({ channelId }));
   }, [dispatch, channelId]);
 
   const { channel } = useSelector((state) => state.watchScreen);
+  const subscriptionStatus = useSelector((state) => state.watchScreen.subscriptionStatus);
 
   const channelLogo = channel?.snippet?.thumbnails?.default?.url;
   const channelTitle = channel?.snippet?.title;
@@ -119,7 +134,9 @@ const VideoMetaData = ({ video, videoId }) => {
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <Button className={classes.subscribeBtn}>Subscribe</Button>
+          <Button className={subscriptionStatus ? classes.subscribed : classes.subscribeBtn}>
+            {subscriptionStatus ? "Subscribed" : "Subscribe"}
+          </Button>
         </Grid>
       </Grid>
       <Divider classes={{ root: classes.divider }} />
