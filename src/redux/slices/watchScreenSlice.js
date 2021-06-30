@@ -41,12 +41,37 @@ export const fetchChannelInfo = createAsyncThunk(
   }
 );
 
+export const checkSubscriptionStatus = createAsyncThunk(
+  "yt_watchscreen/checkSubscriptionStatus",
+  async ({ channelId }, { rejectWithValue, getState }) => {
+    try {
+      const { data } = await axios("/subscriptions", {
+        params: {
+          part: "snippet",
+          forChannelId: channelId,
+          mine: true,
+        },
+        headers: {
+          Authorization: `Bearer ${getState().auth.accessToken}`,
+        },
+      });
+
+      return {
+        status: data.items.length !== 0,
+      };
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const watchScreenSlice = createSlice({
   name: "yt_watchscreen",
   initialState: {
     loading: false,
     video: null,
     channel: null,
+    subscriptionStatus: false,
   },
   extraReducers: {
     //? Thunk To Get Video by Id
@@ -72,6 +97,19 @@ const watchScreenSlice = createSlice({
       state.channel = channel;
     },
     [fetchChannelInfo.rejected]: (state, action) => {
+      state.loading = false;
+    },
+
+    //? Thunk To get Subscription Status
+    [checkSubscriptionStatus.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [checkSubscriptionStatus.fulfilled]: (state, action) => {
+      const { status } = action.payload;
+      state.loading = false;
+      state.subscriptionStatus = status;
+    },
+    [checkSubscriptionStatus.rejected]: (state, action) => {
       state.loading = false;
     },
   },
