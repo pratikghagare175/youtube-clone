@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   addComment: {
@@ -48,6 +49,7 @@ const Comments = () => {
   const classes = useStyles();
   const [showCommentBtn, setShowCommentBtn] = useState(false);
   let commentInput = useRef(null);
+  const dispatch = useDispatch();
 
   const handleCommentChange = () => {
     setShowCommentBtn(true);
@@ -57,6 +59,8 @@ const Comments = () => {
     commentInput.current.value = "";
     setShowCommentBtn(false);
   };
+
+  useEffect(() => {}, []);
 
   return (
     <>
