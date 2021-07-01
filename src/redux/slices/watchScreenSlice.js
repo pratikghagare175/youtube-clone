@@ -65,6 +65,26 @@ export const checkSubscriptionStatus = createAsyncThunk(
   }
 );
 
+export const fetchVideoComments = createAsyncThunk(
+  "yt_watchscreen/fetchVideoComments",
+  async ({ videoId }, { rejectWithValue, getState }) => {
+    try {
+      const { data } = await axios("/commentThreads", {
+        params: {
+          part: "snippet",
+          videoId,
+        },
+      });
+
+      return {
+        data: data.items,
+      };
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const watchScreenSlice = createSlice({
   name: "yt_watchscreen",
   initialState: {
@@ -72,6 +92,7 @@ const watchScreenSlice = createSlice({
     video: null,
     channel: null,
     subscriptionStatus: false,
+    comments: [],
   },
   extraReducers: {
     //? Thunk To Get Video by Id
@@ -110,6 +131,19 @@ const watchScreenSlice = createSlice({
       state.subscriptionStatus = status;
     },
     [checkSubscriptionStatus.rejected]: (state, action) => {
+      state.loading = false;
+    },
+
+    //? Thunk To get Subscription Status
+    [fetchVideoComments.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [fetchVideoComments.fulfilled]: (state, action) => {
+      const { data } = action.payload;
+      state.loading = false;
+      state.comments = data;
+    },
+    [fetchVideoComments.rejected]: (state, action) => {
       state.loading = false;
     },
   },
