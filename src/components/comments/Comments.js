@@ -6,7 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchVideoComments } from "../../redux/slices/watchScreenSlice";
+import { addComments, fetchVideoComments } from "../../redux/slices/watchScreenSlice";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   addComment: {
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   comment: {
-    marginLeft: "-0.5rem",
+    marginLeft: "-0.6rem",
     verticalAlign: "middle",
     [theme.breakpoints.down("xs")]: {
       marginLeft: "0.7rem",
@@ -56,10 +57,12 @@ const useStyles = makeStyles((theme) => ({
 const Comments = ({ videoId }) => {
   const classes = useStyles();
   const [showCommentBtn, setShowCommentBtn] = useState(false);
+  const [commentText, setCommentText] = useState("");
   let commentInput = useRef(null);
   const dispatch = useDispatch();
 
-  const handleCommentChange = () => {
+  const handleCommentChange = (e) => {
+    setCommentText(e.target.value);
     setShowCommentBtn(true);
   };
 
@@ -77,6 +80,10 @@ const Comments = ({ videoId }) => {
 
   const _comments = comments?.map((comment) => comment.snippet.topLevelComment.snippet);
 
+  const postComment = () => {
+    dispatch(addComments({ videoId, comment: commentText }));
+  };
+
   const UserComment = ({ comment }) => {
     return (
       <Grid container style={{ marginBottom: "1.5rem" }}>
@@ -86,7 +93,7 @@ const Comments = ({ videoId }) => {
         <Grid item xs={10}>
           <div className={classes.comment}>
             <Typography variant="body2">
-              <strong>{comment.authorDisplayName}</strong> a day ago
+              <strong>{comment.authorDisplayName}</strong> {moment(comment.publishedAt).fromNow()}
             </Typography>
             <Typography variant="body2">{comment.textDisplay}</Typography>
           </div>
@@ -113,13 +120,14 @@ const Comments = ({ videoId }) => {
               inputProps={{ "aria-label": "description" }}
               fullWidth
               inputRef={commentInput}
-              onChange={handleCommentChange}
+              value={commentText}
+              onChange={(e) => handleCommentChange(e)}
               className={classes.commentInput}
             />
           </form>
         </Grid>
         {showCommentBtn && (
-          <Grid item xs={12}>
+          <Grid item xs={11}>
             <div style={{ float: "right" }}>
               <Button onClick={handleCancel} className={classes.cancelBtn}>
                 Cancel
@@ -129,7 +137,7 @@ const Comments = ({ videoId }) => {
           </Grid>
         )}
       </Grid>
-      {_comments.map((comment, index) => {
+      {_comments?.map((comment, index) => {
         return <UserComment comment={comment} key={index} />;
       })}
     </>
