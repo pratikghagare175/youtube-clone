@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-import { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchVideoComments } from "../../redux/slices/watchScreenSlice";
 
 const useStyles = makeStyles((theme) => ({
   addComment: {
@@ -43,9 +43,17 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "1rem",
     borderRadius: 0,
   },
+
+  comment: {
+    marginLeft: "-0.5rem",
+    verticalAlign: "middle",
+    [theme.breakpoints.down("xs")]: {
+      marginLeft: "0.7rem",
+    },
+  },
 }));
 
-const Comments = () => {
+const Comments = ({ videoId }) => {
   const classes = useStyles();
   const [showCommentBtn, setShowCommentBtn] = useState(false);
   let commentInput = useRef(null);
@@ -60,11 +68,36 @@ const Comments = () => {
     setShowCommentBtn(false);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(fetchVideoComments({ videoId }));
+  }, [dispatch, videoId]);
+
+  //? grab the comments from the store
+  const comments = useSelector((state) => state.watchScreen.comments);
+
+  const _comments = comments?.map((comment) => comment.snippet.topLevelComment.snippet);
+
+  const UserComment = ({ comment }) => {
+    return (
+      <Grid container style={{ marginBottom: "1.5rem" }}>
+        <Grid item xs={1}>
+          <Avatar alt={comment.authorDisplayName} src={comment.authorProfileImageUrl} />
+        </Grid>
+        <Grid item xs={10}>
+          <div className={classes.comment}>
+            <Typography variant="body2">
+              <strong>{comment.authorDisplayName}</strong> a day ago
+            </Typography>
+            <Typography variant="body2">{comment.textDisplay}</Typography>
+          </div>
+        </Grid>
+      </Grid>
+    );
+  };
 
   return (
     <>
-      <Typography>1,234 Comments</Typography>
+      {/* <Typography>1,234 Comments</Typography> */}
       <Grid container alignItems="flex-end" className={classes.addComment}>
         <Grid item>
           <Avatar
@@ -96,22 +129,9 @@ const Comments = () => {
           </Grid>
         )}
       </Grid>
-      <Grid container style={{ marginBottom: "1rem" }}>
-        <Grid item>
-          <Avatar
-            alt="Remy Sharp"
-            src="https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png"
-          />
-        </Grid>
-        <Grid item>
-          <div style={{ marginLeft: "0.7rem", verticalAlign: "middle" }}>
-            <Typography variant="body2">
-              <strong>Pratik Ghagare</strong> a day ago
-            </Typography>
-            <Typography variant="body2">This is just a test Comment</Typography>
-          </div>
-        </Grid>
-      </Grid>
+      {_comments.map((comment, index) => {
+        return <UserComment comment={comment} key={index} />;
+      })}
     </>
   );
 };
