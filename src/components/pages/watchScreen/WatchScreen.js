@@ -65,7 +65,7 @@ const WatchScreen = () => {
           </Card>
           <VideoMetaData video={video} videoId={videoId} />
 
-          <Comments />
+          <Comments videoId={videoId} />
         </Grid>
         <Grid item lg={4}>
           {[...Array(20)].map((item, index) => (
