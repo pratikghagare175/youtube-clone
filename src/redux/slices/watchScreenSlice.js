@@ -67,7 +67,7 @@ export const checkSubscriptionStatus = createAsyncThunk(
 
 export const fetchVideoComments = createAsyncThunk(
   "yt_watchscreen/fetchVideoComments",
-  async ({ videoId }, { rejectWithValue, getState }) => {
+  async ({ videoId }, { rejectWithValue }) => {
     try {
       const { data } = await axios("/commentThreads", {
         params: {
@@ -78,6 +78,40 @@ export const fetchVideoComments = createAsyncThunk(
 
       return {
         data: data.items,
+      };
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const addComments = createAsyncThunk(
+  "yt_watchscreen/addComments",
+  async ({ videoId, comment }, { rejectWithValue, getState }) => {
+    try {
+      //? Creating comment data videoId & "snippet.topLevelComment.snippet.textOriginal"
+      const commentObj = {
+        snippet: {
+          videoId,
+          topLevelComment: {
+            snippet: {
+              textOriginal: comment,
+            },
+          },
+        },
+      };
+
+      await axios.post("/commentThreads", commentObj, {
+        params: {
+          part: "snippet",
+        },
+        headers: {
+          Authorization: `Bearer ${getState().auth.accessToken}`,
+        },
+      });
+
+      return {
+        data: "Comment Added",
       };
     } catch (error) {
       return rejectWithValue(error);
@@ -144,6 +178,18 @@ const watchScreenSlice = createSlice({
       state.comments = data;
     },
     [fetchVideoComments.rejected]: (state, action) => {
+      state.loading = false;
+    },
+
+    //? Thunk To add Comments
+    [addComments.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [addComments.fulfilled]: (state, action) => {
+      const { data } = action.payload;
+      state.loading = false;
+    },
+    [addComments.rejected]: (state, action) => {
       state.loading = false;
     },
   },
