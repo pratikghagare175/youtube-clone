@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { addComments, fetchVideoComments } from "../../redux/slices/watchScreenSlice";
 import moment from "moment";
+import numeral from "numeral";
 
 const useStyles = makeStyles((theme) => ({
   addComment: {
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Comments = ({ videoId }) => {
+const Comments = ({ videoId, totalComments }) => {
   const classes = useStyles();
   const [showCommentBtn, setShowCommentBtn] = useState(false);
   const [commentText, setCommentText] = useState("");
@@ -81,7 +82,12 @@ const Comments = ({ videoId }) => {
   const _comments = comments?.map((comment) => comment.snippet.topLevelComment.snippet);
 
   const postComment = () => {
+    if (commentText.length === 0) return alert("Please Enter Some Comment");
+    console.log("Comment Posted", commentText);
     dispatch(addComments({ videoId, comment: commentText }));
+    commentInput.current.value = "";
+    setCommentText("");
+    setShowCommentBtn(false);
   };
 
   const UserComment = ({ comment }) => {
@@ -104,7 +110,7 @@ const Comments = ({ videoId }) => {
 
   return (
     <>
-      {/* <Typography>1,234 Comments</Typography> */}
+      <Typography>{numeral(totalComments).format("0.aa").toUpperCase()} Comments</Typography>
       <Grid container alignItems="flex-end" className={classes.addComment}>
         <Grid item>
           <Avatar
@@ -132,7 +138,9 @@ const Comments = ({ videoId }) => {
               <Button onClick={handleCancel} className={classes.cancelBtn}>
                 Cancel
               </Button>
-              <Button className={classes.commentBtn}>Comment</Button>
+              <Button className={classes.commentBtn} onClick={postComment}>
+                Comment
+              </Button>
             </div>
           </Grid>
         )}
