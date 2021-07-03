@@ -87,7 +87,7 @@ export const fetchVideoComments = createAsyncThunk(
 
 export const addComments = createAsyncThunk(
   "yt_watchscreen/addComments",
-  async ({ videoId, comment }, { rejectWithValue, getState }) => {
+  async ({ videoId, comment }, { rejectWithValue, getState, dispatch }) => {
     try {
       //? Creating comment data videoId & "snippet.topLevelComment.snippet.textOriginal"
       const commentObj = {
@@ -110,6 +110,10 @@ export const addComments = createAsyncThunk(
         },
       });
 
+      //? Time required to add comment in public API
+      setTimeout(() => {
+        dispatch(fetchVideoComments({ videoId }));
+      }, 5000);
       return {
         data: "Comment Added",
       };
