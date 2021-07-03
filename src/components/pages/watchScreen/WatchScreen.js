@@ -39,7 +39,6 @@ const WatchScreen = () => {
 
   useEffect(() => {
     dispatch(fetchVideoById({ videoId }));
-    console.log("Use Effect Called");
   }, [dispatch, videoId]);
 
   const { video, loading } = useSelector((state) => state.watchScreen);
@@ -65,7 +64,7 @@ const WatchScreen = () => {
           </Card>
           <VideoMetaData video={video} videoId={videoId} />
 
-          <Comments videoId={videoId} />
+          <Comments videoId={videoId} totalComments={video?.statistics?.commentCount} />
         </Grid>
         <Grid item lg={4}>
           {[...Array(20)].map((item, index) => (
