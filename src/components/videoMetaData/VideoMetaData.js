@@ -101,7 +101,7 @@ const VideoMetaData = ({ video, videoId }) => {
         <Grid item justify="space-between" alignItems="center" xs={12} sm={6}>
           <Typography variant="body2">
             {numeral(video?.statistics.viewCount).format("0.aa").toUpperCase()} views •
-            {moment(video?.statistics.publishedAt).fromNow()}
+            {moment(video?.statistics?.publishedAt).fromNow()}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={5}>
