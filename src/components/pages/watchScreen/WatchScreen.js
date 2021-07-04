@@ -9,7 +9,8 @@ import VideoMetaData from "../../videoMetaData/VideoMetaData";
 import VideoHorizontal from "../../videoHorizontal/VideoHorizontal";
 import Comments from "../../comments/Comments";
 import { useParams } from "react-router-dom";
-import { fetchVideoById } from "../../../redux/slices/watchScreenSlice";
+import { fetchRelatedVideos, fetchVideoById } from "../../../redux/slices/watchScreenSlice";
+import RelatedVideoSkeleton from "../../videoSkeleton/HorizontalSkeleton";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -39,9 +40,10 @@ const WatchScreen = () => {
 
   useEffect(() => {
     dispatch(fetchVideoById({ videoId }));
+    dispatch(fetchRelatedVideos({ videoId }));
   }, [dispatch, videoId]);
 
-  const { video, loading } = useSelector((state) => state.watchScreen);
+  const { video, loading, relatedVideosArr } = useSelector((state) => state.watchScreen);
 
   return (
     <div style={{ marginTop: "-3rem" }}>
@@ -67,9 +69,13 @@ const WatchScreen = () => {
           <Comments videoId={videoId} totalComments={video?.statistics?.commentCount} />
         </Grid>
         <Grid item lg={4}>
-          {[...Array(20)].map((item, index) => (
-            <VideoHorizontal key={index} />
-          ))}
+          {!loading
+            ? relatedVideosArr
+                ?.filter((video) => video.snippet)
+                .map((video) => <VideoHorizontal video={video} key={video.id.videoId} />)
+            : relatedVideosArr
+                .filter((video) => video.snippet)
+                .map((video) => <RelatedVideoSkeleton key={video.id.videoId} />)}
         </Grid>
       </Grid>
     </div>
