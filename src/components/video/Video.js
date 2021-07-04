@@ -81,6 +81,7 @@ const Video = ({ video }) => {
 
   const _videoId = id?.videoId || id;
 
+  //? To get Video details like views and time
   useEffect(() => {
     const getVideoDetails = async () => {
       const {
@@ -98,6 +99,7 @@ const Video = ({ video }) => {
     getVideoDetails();
   }, [_videoId]);
 
+  //? To get Channel details like channel Icon
   useEffect(() => {
     const getChannelDetails = async () => {
       const {
