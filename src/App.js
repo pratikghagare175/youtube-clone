@@ -10,6 +10,7 @@ import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import HomeScreen from "./components/pages/homescreen/HomeScreen";
 import Login from "./components/pages/login/Login";
 import WatchScreen from "./components/pages/watchScreen/WatchScreen";
+import SearchScreen from "./components/pages/searchScreen/SearchScreen";
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,9 +56,9 @@ const App = () => {
       <Route path="/login" exact>
         <Login />
       </Route>
-      <Route path="/search" exact>
+      <Route path="/search/:query" exact>
         <Layout>
-          <h1>Searching</h1>
+          <SearchScreen />
         </Layout>
       </Route>
       <Route path="/watch/:videoId" exact>
