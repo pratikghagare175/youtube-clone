@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -14,7 +14,7 @@ import AppsIcon from "@material-ui/icons/Apps";
 import Badge from "@material-ui/core/Badge";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { fade } from "@material-ui/core/styles";
 import youtubeLogo from "../../assets/yt-logo.png";
 import CategoriesBar from "../categoriesBar/CategoriesBar";
@@ -164,9 +164,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = ({ handleToggleSidebar }) => {
+  const [searchText, setSearchText] = useState(null);
   const classes = useStyles();
   const location = useLocation();
+  const history = useHistory();
   const path = location.pathname === "/";
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      console.log("🚀 ~ file: Header.js ~ line 175 ~ handleSearch ~ e", e.key);
+      history.push(`/search/${searchText}`);
+    }
+  };
 
   return (
     <>
@@ -201,13 +210,16 @@ const Header = ({ handleToggleSidebar }) => {
                   <SearchIcon />
                 </div>
                 <InputBase
-                  placeholder="Search…"
+                  placeholder="Search"
                   fullWidth={true}
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,
                   }}
                   inputProps={{ "aria-label": "search" }}
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  onKeyDown={handleSearch}
                 />
               </div>
 
