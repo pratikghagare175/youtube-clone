@@ -26,7 +26,7 @@ export const fetchPopularVideos = createAsyncThunk(
 );
 
 export const fetchVideoByCategory = createAsyncThunk(
-  "yt_homescreen/fetchPopularVideos",
+  "yt_homescreen/fetchVideoByCategory",
   async ({ keyword }, { getState, rejectWithValue }) => {
     try {
       const { data } = await axios("/search", {
