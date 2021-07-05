@@ -8,7 +8,9 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
+import axios from "../../Axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,25 +51,75 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const VideoHorizontal = () => {
+const VideoHorizontal = ({ video }) => {
   const classes = useStyles();
+  const [views, setViews] = useState(null);
+  const [duration, setDuration] = useState(null);
+  const [channelIcon, setChannelIcon] = useState(null);
+  const history = useHistory();
 
-  const seconds = moment.duration("0000000").asSeconds();
+  //? Desctructuring related video to get channel and video related data
+  const channelId = video.snippet.channelId;
+  const videoId = video.id.videoId;
+  const channelTitle = video.snippet.channelTitle;
+  const videoTitle = video.snippet.title;
+  const videoDescription = video.snippet.description;
+  const publishedAt = video.snippet.publishedAt;
+  const videoBanner = video.snippet.thumbnails?.medium.url;
+
+  //? To get Video details like views and time
+  useEffect(() => {
+    const getVideoDetails = async () => {
+      const {
+        data: { items },
+      } = await axios("/videos", {
+        params: {
+          part: "contentDetails,statistics",
+          id: videoId,
+        },
+      });
+      setDuration(items[0].contentDetails.duration);
+      setViews(items[0].statistics.viewCount);
+    };
+
+    getVideoDetails();
+  }, [videoId]);
+
+  //? To get Channel details like channel Icon
+  useEffect(() => {
+    const getChannelDetails = async () => {
+      const {
+        data: { items },
+      } = await axios("/channels", {
+        params: {
+          part: "snippet",
+          id: channelId,
+        },
+      });
+      setChannelIcon(items[0].snippet.thumbnails.medium.url);
+    };
+
+    getChannelDetails();
+  }, [channelId]);
+
+  //? To Calculate Video Duration
+  const seconds = moment.duration(duration).asSeconds();
   const _duration = moment.utc(seconds * 1000).format("mm:ss");
+
+  const handleVideoClick = () => {
+    history.push(`/watch/${videoId}`);
+  };
+
   return (
     <div className={classes.root}>
-      <Card className={classes.card}>
+      <Card className={classes.card} onClick={handleVideoClick}>
         <Grid container>
           <Grid item xs={4} md={4}>
             <div style={{ position: "relative", width: "120px" }}>
               <CardMedia
                 className={classes.media}
                 component={() => (
-                  <LazyLoadImage
-                    effect="blur"
-                    src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_1280,h_720/https://blog.snappa.com/wp-content/uploads/2019/01/YouTube-Thumbnail-Dimensions.jpg"
-                    style={{ width: "100%" }}
-                  />
+                  <LazyLoadImage effect="blur" src={videoBanner} style={{ width: "100%" }} />
                 )}
               ></CardMedia>
               <span className={classes.duration}>{_duration}</span>
@@ -75,14 +127,17 @@ const VideoHorizontal = () => {
           </Grid>
           <Grid item xs={8} md={8}>
             <div style={{ marginLeft: "0.2rem", marginTop: "0.3rem" }}>
-              <Typography variant="body2" noWrap className={classes.video_title}>
-                This is gonna be the titile ssdfsdfsdfsdf
-              </Typography>
+              <Tooltip title={videoTitle} TransitionComponent={Zoom} placement="bottom-end">
+                <Typography variant="body2" noWrap className={classes.video_title}>
+                  {videoTitle}
+                </Typography>
+              </Tooltip>
+
               <Typography variant="caption" noWrap style={{ display: "block" }}>
-                Pratik Ghagare
+                {channelTitle}
               </Typography>
               <Typography variant="caption">
-                {numeral(10000).format("0.aa").toUpperCase()} views • {moment("2021-06-20").fromNow()}
+                {numeral(views).format("0.aa").toUpperCase()} views • {moment(publishedAt).fromNow()}
               </Typography>
             </div>
           </Grid>
