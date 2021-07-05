@@ -123,6 +123,28 @@ export const addComments = createAsyncThunk(
   }
 );
 
+export const fetchRelatedVideos = createAsyncThunk(
+  "yt_watchscreen/fetchRelatedVideos",
+  async ({ videoId }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios("/search", {
+        params: {
+          part: "snippet",
+          relatedToVideoId: videoId,
+          maxResults: 15,
+          type: "video",
+        },
+      });
+
+      return {
+        videos: data.items,
+      };
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const watchScreenSlice = createSlice({
   name: "yt_watchscreen",
   initialState: {
@@ -131,6 +153,7 @@ const watchScreenSlice = createSlice({
     channel: null,
     subscriptionStatus: false,
     comments: [],
+    relatedVideosArr: [],
   },
   extraReducers: {
     //? Thunk To Get Video by Id
@@ -194,6 +217,19 @@ const watchScreenSlice = createSlice({
       state.loading = false;
     },
     [addComments.rejected]: (state, action) => {
+      state.loading = false;
+    },
+
+    //? Thunk to fetch related videos
+    [fetchRelatedVideos.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [fetchRelatedVideos.fulfilled]: (state, action) => {
+      const { videos } = action.payload;
+      state.loading = false;
+      state.relatedVideosArr = videos;
+    },
+    [fetchRelatedVideos.rejected]: (state, action) => {
       state.loading = false;
     },
   },
