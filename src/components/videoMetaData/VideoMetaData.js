@@ -89,6 +89,7 @@ const VideoMetaData = ({ video, videoId }) => {
   const channelLogo = channel?.snippet?.thumbnails?.default?.url;
   const channelTitle = channel?.snippet?.title;
   const channelSubsCount = channel?.statistics?.subscriberCount;
+  const publishedAt = video?.snippet?.publishedAt;
   return (
     <div className={classes.root}>
       {/* Video Title And Views Section */}
@@ -100,8 +101,8 @@ const VideoMetaData = ({ video, videoId }) => {
         </Grid>
         <Grid item justify="space-between" alignItems="center" xs={12} sm={6}>
           <Typography variant="body2">
-            {numeral(video?.statistics.viewCount).format("0.aa").toUpperCase()} views •
-            {moment(video?.statistics?.publishedAt).fromNow()}
+            {numeral(video?.statistics.viewCount).format("0.aa").toUpperCase()} views •{" "}
+            {moment(publishedAt).fromNow()}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={5}>
