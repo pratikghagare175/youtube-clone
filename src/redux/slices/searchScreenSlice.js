@@ -10,7 +10,7 @@ export const fetchVideoBySearch = createAsyncThunk(
           part: "snippet",
           maxResults: 20,
           q: query,
-          type: "video",
+          type: "video,channel",
         },
       });
       return {
