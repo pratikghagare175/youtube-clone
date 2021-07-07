@@ -111,7 +111,7 @@ const Comments = ({ videoId, totalComments }) => {
   return (
     <>
       <Typography>{numeral(totalComments).format("0.aa").toUpperCase()} Comments</Typography>
-      <Grid container alignItems="flex-end" className={classes.addComment}>
+      <Grid container lg={8} alignItems="flex-end" className={classes.addComment}>
         <Grid item>
           <Avatar
             alt="Remy Sharp"
