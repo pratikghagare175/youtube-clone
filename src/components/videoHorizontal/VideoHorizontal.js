@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import numeral from "numeral";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -27,6 +28,27 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: "0 8px 50px -12.125px rgba(0,0,0,0.3)",
     },
   },
+
+  searchCard: {
+    maxHeight: 300,
+    background: "#16181B",
+    transition: "0.3s",
+    marginBottom: "1rem",
+    boxShadow: "0 2px 20px -12px rgba(0,0,0,0.3)",
+    "&:hover": {
+      boxShadow: "0 8px 50px -12.125px rgba(0,0,0,0.3)",
+    },
+  },
+
+  searchImgDiv: {
+    position: "relative",
+    width: "300px",
+    marginRight: 0,
+    [theme.breakpoints.down("xs")]: {
+      width: "150px",
+    },
+  },
+
   media: {
     paddingTop: "65%",
   },
@@ -45,13 +67,31 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#080808",
     borderRadius: "3px",
   },
+
+  searchContentDiv: {
+    marginLeft: "-1.5rem",
+    marginTop: "0.3rem",
+    [theme.breakpoints.down("xs")]: {
+      // marginLeft: "0.3rem",
+    },
+  },
   video_title: {
     fontWeight: "bold",
     color: "#fff",
   },
+
+  search_video_title: {
+    fontWeight: "bold",
+    color: "#fff",
+    [theme.breakpoints.down("xs")]: {
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+    },
+  },
 }));
 
-const VideoHorizontal = ({ video }) => {
+const VideoHorizontal = ({ video, searchScreen }) => {
   const classes = useStyles();
   const [views, setViews] = useState(null);
   const [duration, setDuration] = useState(null);
@@ -110,8 +150,9 @@ const VideoHorizontal = ({ video }) => {
     history.push(`/watch/${videoId}`);
   };
 
-  return (
-    <div className={classes.root}>
+  //? TO RENDER RELATED VIDEOS
+  const RelatedVideos = () => {
+    return (
       <Card className={classes.card} onClick={handleVideoClick}>
         <Grid container>
           <Grid item xs={4} md={4}>
@@ -143,8 +184,49 @@ const VideoHorizontal = ({ video }) => {
           </Grid>
         </Grid>
       </Card>
-    </div>
-  );
+    );
+  };
+
+  //? TO RENDER VIDEOS BY SEARCH
+  const SearchVideos = () => {
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down("xs"));
+    return (
+      <Card className={classes.searchCard} onClick={handleVideoClick}>
+        <Grid container>
+          <Grid item xs={6} lg={4}>
+            <div className={classes.searchImgDiv}>
+              <CardMedia
+                className={classes.media}
+                component={() => (
+                  <LazyLoadImage effect="blur" src={videoBanner} style={{ width: "100%" }} />
+                )}
+              ></CardMedia>
+              <span className={classes.duration}>{_duration}</span>
+            </div>
+          </Grid>
+          <Grid item xs={6} lg={8}>
+            <div className={classes.searchContentDiv}>
+              <Tooltip title={videoTitle} TransitionComponent={Zoom} placement="bottom-end">
+                <Typography variant={matches ? "body2" : "h6"} className={classes.search_video_title}>
+                  {videoTitle}
+                </Typography>
+              </Tooltip>
+
+              <Typography variant="caption" style={{ display: "block" }}>
+                {channelTitle}
+              </Typography>
+              <Typography variant="caption">
+                {numeral(views).format("0.aa").toUpperCase()} views • {moment(publishedAt).fromNow()}
+              </Typography>
+            </div>
+          </Grid>
+        </Grid>
+      </Card>
+    );
+  };
+
+  return <div className={classes.root}>{searchScreen ? <SearchVideos /> : <RelatedVideos />}</div>;
 };
 
 export default VideoHorizontal;
