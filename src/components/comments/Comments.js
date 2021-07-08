@@ -83,7 +83,6 @@ const Comments = ({ videoId, totalComments }) => {
 
   const postComment = () => {
     if (commentText.length === 0) return alert("Please Enter Some Comment");
-    console.log("Comment Posted", commentText);
     dispatch(addComments({ videoId, comment: commentText }));
     commentInput.current.value = "";
     setCommentText("");
