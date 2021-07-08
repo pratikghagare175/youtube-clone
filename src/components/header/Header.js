@@ -172,7 +172,6 @@ const Header = ({ handleToggleSidebar }) => {
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
-      console.log("🚀 ~ file: Header.js ~ line 175 ~ handleSearch ~ e", e.key);
       history.push(`/search/${searchText}`);
     }
   };
