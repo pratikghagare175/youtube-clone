@@ -29,6 +29,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+  relatedContent: {
+    marginLeft: "0.2rem",
+    marginTop: "0.3rem",
+  },
+
   searchCard: {
     maxHeight: 300,
     background: "#16181B",
@@ -153,37 +158,39 @@ const VideoHorizontal = ({ video, searchScreen }) => {
   //? TO RENDER RELATED VIDEOS
   const RelatedVideos = () => {
     return (
-      <Card className={classes.card} onClick={handleVideoClick}>
-        <Grid container>
-          <Grid item xs={4} md={4}>
-            <div style={{ position: "relative", width: "120px" }}>
-              <CardMedia
-                className={classes.media}
-                component={() => (
-                  <LazyLoadImage effect="blur" src={videoBanner} style={{ width: "100%" }} />
-                )}
-              ></CardMedia>
-              <span className={classes.duration}>{_duration}</span>
-            </div>
-          </Grid>
-          <Grid item xs={8} md={8}>
-            <div style={{ marginLeft: "0.2rem", marginTop: "0.3rem" }}>
-              <Tooltip title={videoTitle} TransitionComponent={Zoom} placement="bottom-end">
-                <Typography variant="body2" noWrap className={classes.video_title}>
-                  {videoTitle}
-                </Typography>
-              </Tooltip>
+      <>
+        <Card className={classes.card} onClick={handleVideoClick}>
+          <Grid container>
+            <Grid item xs={4} md={4}>
+              <div style={{ position: "relative", width: "120px" }}>
+                <CardMedia
+                  className={classes.media}
+                  component={() => (
+                    <LazyLoadImage effect="blur" src={videoBanner} style={{ width: "100%" }} />
+                  )}
+                ></CardMedia>
+                <span className={classes.duration}>{_duration}</span>
+              </div>
+            </Grid>
+            <Grid item xs={8} md={8}>
+              <div className={classes.relatedContent}>
+                <Tooltip title={videoTitle} TransitionComponent={Zoom} placement="bottom-end">
+                  <Typography variant="body2" noWrap className={classes.video_title}>
+                    {videoTitle}
+                  </Typography>
+                </Tooltip>
 
-              <Typography variant="caption" noWrap style={{ display: "block" }}>
-                {channelTitle}
-              </Typography>
-              <Typography variant="caption">
-                {numeral(views).format("0.aa").toUpperCase()} views • {moment(publishedAt).fromNow()}
-              </Typography>
-            </div>
+                <Typography variant="caption" noWrap style={{ display: "block" }}>
+                  {channelTitle}
+                </Typography>
+                <Typography variant="caption">
+                  {numeral(views).format("0.aa").toUpperCase()} views • {moment(publishedAt).fromNow()}
+                </Typography>
+              </div>
+            </Grid>
           </Grid>
-        </Grid>
-      </Card>
+        </Card>
+      </>
     );
   };
 
@@ -220,6 +227,27 @@ const VideoHorizontal = ({ video, searchScreen }) => {
                 {numeral(views).format("0.aa").toUpperCase()} views • {moment(publishedAt).fromNow()}
               </Typography>
             </div>
+
+            <Grid container spacing={0}>
+              {/* <Grid item xs={3}>
+                <Avatar key="hi" src={channelIcon} />
+              </Grid>
+              <Grid item xs={9}>
+                <Tooltip title={title} TransitionComponent={Zoom} placement="bottom-end">
+                  <Typography noWrap className={classes.heading} gutterBottom>
+                    {title}
+                  </Typography>
+                </Tooltip>
+
+                <Typography noWrap className={classes.channelName}>
+                  {channelTitle}
+                </Typography>
+
+                <Typography variant={"caption"}>
+                  {numeral(views).format("0.aa").toUpperCase()} views • {moment(publishedAt).fromNow()}
+                </Typography>
+              </Grid> */}
+            </Grid>
           </Grid>
         </Grid>
       </Card>
