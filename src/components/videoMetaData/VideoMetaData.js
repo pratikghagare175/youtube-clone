@@ -16,13 +16,14 @@ import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginRight: "0",
   },
 
   likes: {
     float: "right",
     marginRight: "-1.5rem",
     marginTop: "-0.4rem",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("xs")]: {
       float: "none",
       marginTop: "0.6rem",
       marginRight: "0",
