@@ -13,10 +13,14 @@ import { fetchRelatedVideos, fetchVideoById } from "../../../redux/slices/watchS
 import RelatedVideoSkeleton from "../../videoSkeleton/HorizontalSkeleton";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: "-3rem",
+  },
   card: {
     marginBottom: "2rem",
-    marginRight: "1.5rem",
-    [theme.breakpoints.down("md")]: {
+    marginRight: "1rem",
+    [theme.breakpoints.down("xs")]: {
       marginRight: "0",
       marginBottom: "1rem",
       marginTop: "1.5rem",
@@ -26,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     height: "60vh",
     width: "100%",
     backgroundColor: "#353946",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("xs")]: {
       height: "25vh",
       width: "100%",
     },
@@ -46,9 +50,9 @@ const WatchScreen = () => {
   const { video, loading, relatedVideosArr } = useSelector((state) => state.watchScreen);
 
   return (
-    <div style={{ marginTop: "-3rem" }}>
+    <div className={classes.root}>
       <Grid container>
-        <Grid item lg={8}>
+        <Grid item xs={12} lg={8}>
           <Card className={classes.card}>
             <CardActionArea>
               {/* Pass the videoId to src attribute */}
@@ -66,9 +70,11 @@ const WatchScreen = () => {
           </Card>
           <VideoMetaData video={video} videoId={videoId} />
 
-          <Comments videoId={videoId} totalComments={video?.statistics?.commentCount} />
+          <Grid item xs={12}>
+            <Comments videoId={videoId} totalComments={video?.statistics?.commentCount} />
+          </Grid>
         </Grid>
-        <Grid item lg={4}>
+        <Grid item xs={12} lg={4}>
           {!loading
             ? relatedVideosArr
                 ?.filter((video) => video.snippet)
