@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
   avatar: {
     margin: "0.5rem 0rem",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("xs")]: {
       margin: "0rem 0.5rem",
     },
   },
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: "middle",
     marginLeft: "1rem",
     marginTop: "-2.5rem",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("xs")]: {
       width: "30ch",
       marginLeft: "0.5rem",
       marginTop: "-2.0rem",
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "-0.6rem",
     verticalAlign: "middle",
     [theme.breakpoints.down("xs")]: {
-      marginLeft: "0.7rem",
+      marginLeft: "1rem",
     },
   },
 }));
@@ -91,11 +91,11 @@ const Comments = ({ videoId, totalComments }) => {
 
   const UserComment = ({ comment }) => {
     return (
-      <Grid container style={{ marginBottom: "1.5rem" }}>
+      <Grid container xs={12} style={{ marginBottom: "1.5rem" }}>
         <Grid item xs={1}>
           <Avatar alt={comment.authorDisplayName} src={comment.authorProfileImageUrl} />
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={11}>
           <div className={classes.comment}>
             <Typography variant="body2">
               <strong>{comment.authorDisplayName}</strong> {moment(comment.publishedAt).fromNow()}
@@ -108,9 +108,9 @@ const Comments = ({ videoId, totalComments }) => {
   };
 
   return (
-    <>
+    <div>
       <Typography>{numeral(totalComments).format("0.aa").toUpperCase()} Comments</Typography>
-      <Grid container lg={8} alignItems="flex-end" className={classes.addComment}>
+      <Grid container alignItems="flex-end" className={classes.addComment}>
         <Grid item>
           <Avatar
             alt="Remy Sharp"
@@ -147,7 +147,7 @@ const Comments = ({ videoId, totalComments }) => {
       {_comments?.map((comment, index) => {
         return <UserComment comment={comment} key={index} />;
       })}
-    </>
+    </div>
   );
 };
 
