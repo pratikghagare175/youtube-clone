@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "1.7rem",
     borderRadius: "0",
 
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("xs")]: {
       marginTop: "-2.7rem",
       marginRight: "1rem",
     },
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "1.7rem",
     borderRadius: "0",
 
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("xs")]: {
       marginTop: "-2.7rem",
       marginRight: "1rem",
     },
