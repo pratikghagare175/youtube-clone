@@ -9,6 +9,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
+import Avatar from "@material-ui/core/Avatar";
 import axios from "../../Axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useHistory } from "react-router-dom";
@@ -74,12 +75,23 @@ const useStyles = makeStyles((theme) => ({
   },
 
   searchContentDiv: {
-    marginLeft: "-1.5rem",
+    marginLeft: "-3rem",
     marginTop: "0.3rem",
+
     [theme.breakpoints.down("xs")]: {
-      // marginLeft: "0.3rem",
+      marginLeft: "-1.5rem",
     },
   },
+
+  avatar: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    [theme.breakpoints.down("xs")]: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+    },
+  },
+
   video_title: {
     fontWeight: "bold",
     color: "#fff",
@@ -94,6 +106,13 @@ const useStyles = makeStyles((theme) => ({
       textOverflow: "ellipsis",
     },
   },
+
+  searchChannelTitleDiv: {
+    marginTop: "0.4rem",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "0",
+    },
+  },
 }));
 
 const VideoHorizontal = ({ video, searchScreen }) => {
@@ -106,6 +125,7 @@ const VideoHorizontal = ({ video, searchScreen }) => {
   //? Desctructuring related video to get channel and video related data
   const channelId = video.snippet.channelId;
   const videoId = video.id.videoId;
+  const isVideo = video.id.kind === "youtube#video";
   const channelTitle = video.snippet.channelTitle;
   const videoTitle = video.snippet.title;
   const videoDescription = video.snippet.description;
@@ -198,59 +218,58 @@ const VideoHorizontal = ({ video, searchScreen }) => {
   const SearchVideos = () => {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down("xs"));
+    //? Video Description
+    const searchVideoDescription =
+      videoDescription.length > 120 ? videoDescription.substring(0, 120) + "......" : videoDescription;
+
     return (
-      <Card className={classes.searchCard} onClick={handleVideoClick}>
-        <Grid container>
-          <Grid item xs={6} lg={4}>
-            <div className={classes.searchImgDiv}>
-              <CardMedia
-                className={classes.media}
-                component={() => (
-                  <LazyLoadImage effect="blur" src={videoBanner} style={{ width: "100%" }} />
-                )}
-              ></CardMedia>
-              <span className={classes.duration}>{_duration}</span>
-            </div>
-          </Grid>
-          <Grid item xs={6} lg={8}>
-            <div className={classes.searchContentDiv}>
-              <Tooltip title={videoTitle} TransitionComponent={Zoom} placement="bottom-end">
-                <Typography variant={matches ? "body2" : "h6"} className={classes.search_video_title}>
-                  {videoTitle}
-                </Typography>
-              </Tooltip>
-
-              <Typography variant="caption" style={{ display: "block" }}>
-                {channelTitle}
-              </Typography>
-              <Typography variant="caption">
-                {numeral(views).format("0.aa").toUpperCase()} views • {moment(publishedAt).fromNow()}
-              </Typography>
-            </div>
-
-            <Grid container spacing={0}>
-              {/* <Grid item xs={3}>
-                <Avatar key="hi" src={channelIcon} />
+      <div className={classes.root}>
+        {isVideo && (
+          <Card className={classes.searchCard} onClick={handleVideoClick}>
+            <Grid container>
+              <Grid item xs={6} lg={4}>
+                <div className={isVideo ? classes.searchImgDiv : classes.searchImgDivChannel}>
+                  <CardMedia
+                    className={classes.media}
+                    component={() => (
+                      <LazyLoadImage effect="blur" src={videoBanner} style={{ width: "100%" }} />
+                    )}
+                  ></CardMedia>
+                  <span className={classes.duration}>{_duration}</span>
+                </div>
               </Grid>
-              <Grid item xs={9}>
-                <Tooltip title={title} TransitionComponent={Zoom} placement="bottom-end">
-                  <Typography noWrap className={classes.heading} gutterBottom>
-                    {title}
+              <Grid item xs={6} lg={8}>
+                <div className={classes.searchContentDiv}>
+                  <Typography
+                    noWrap
+                    variant={matches ? "body2" : "h6"}
+                    className={classes.search_video_title}
+                  >
+                    {videoTitle}
                   </Typography>
-                </Tooltip>
-
-                <Typography noWrap className={classes.channelName}>
-                  {channelTitle}
-                </Typography>
-
-                <Typography variant={"caption"}>
-                  {numeral(views).format("0.aa").toUpperCase()} views • {moment(publishedAt).fromNow()}
-                </Typography>
-              </Grid> */}
+                  <Typography variant="caption">
+                    {numeral(views).format("0.aa").toUpperCase()} views • {moment(publishedAt).fromNow()}
+                  </Typography>
+                  <Grid container spacing={0} style={{ marginTop: "0.7rem" }}>
+                    <Grid item xs={3} lg={1}>
+                      <Avatar key={videoId} src={channelIcon} className={classes.avatar} />
+                    </Grid>
+                    <Grid item xs={9} lg={10} className={classes.searchChannelTitleDiv}>
+                      <Typography variant="body2" style={{ marginLeft: "-1rem" }}>
+                        {channelTitle}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  {/* Hide Description on mobile devices */}
+                  <div style={{ marginTop: "1rem" }}>
+                    <Typography variant="caption">{!matches ? searchVideoDescription : null}</Typography>
+                  </div>
+                </div>
+              </Grid>
             </Grid>
-          </Grid>
-        </Grid>
-      </Card>
+          </Card>
+        )}
+      </div>
     );
   };
 
