@@ -14,6 +14,7 @@ import LikedIcon from "@material-ui/icons/ThumbUp";
 import HistoryIcon from "@material-ui/icons/History";
 import LibraryIcon from "@material-ui/icons/LibraryBooks";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 200;
 
@@ -104,7 +105,7 @@ const SideBar = ({ open }) => {
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem className={classes.iconList}>
+          <ListItem className={classes.iconList} component={Link} to="/feed/subscriptions">
             <ListItemIcon>
               <SubscriptionIcon className={classes.iconColor} />
             </ListItemIcon>
