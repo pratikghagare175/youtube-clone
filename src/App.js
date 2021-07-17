@@ -12,6 +12,7 @@ import Login from "./components/pages/login/Login";
 import WatchScreen from "./components/pages/watchScreen/WatchScreen";
 import SearchScreen from "./components/pages/searchScreen/SearchScreen";
 import { useSelector } from "react-redux";
+import SubscriptionScreen from "./components/pages/subscriptionScreen/SubscriptionScreen";
 
 const useStyles = makeStyles((theme) => ({
   app_container: {
@@ -43,9 +44,9 @@ const App = () => {
   const accessToken = useSelector((state) => state.auth.accessToken);
   const history = useHistory();
 
-  if (!accessToken) {
-    history.push("/login");
-  }
+  // if (!accessToken) {
+  //   history.push("/login");
+  // }
   return (
     <Switch>
       <Route path="/" exact>
@@ -64,6 +65,12 @@ const App = () => {
       <Route path="/watch/:videoId" exact>
         <Layout>
           <WatchScreen />
+        </Layout>
+      </Route>
+
+      <Route path="/feed/subscriptions" exact>
+        <Layout>
+          <SubscriptionScreen/>
         </Layout>
       </Route>
 
