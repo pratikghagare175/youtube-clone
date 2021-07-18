@@ -6,12 +6,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Video from "../../video/Video";
 import InfiniteScroll from "react-infinite-scroll-component";
-import VideoSkeleton from "../../videoSkeleton/VideoSkeleton";
+import VideoSkeleton from "../../skeleton/VideoSkeleton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    alignContent: "center",
+    // alignContent: "center",
     width: "100%",
   },
   card_grid: {
@@ -45,12 +45,12 @@ const HomeScreen = () => {
           <Grid container spacing={2} className={classes.root}>
             {loading
               ? [...Array(20)].map((item, index) => (
-                  <Grid item xs={3} className={classes.card_grid} key={index}>
+                  <Grid item xs={12} md={4} lg={3} className={classes.card_grid} key={index}>
                     <VideoSkeleton />
                   </Grid>
                 ))
               : videos.map((video) => (
-                  <Grid item className={classes.card_grid} key={video.id}>
+                  <Grid item xs={12} md={4} lg={3} className={classes.card_grid} key={video.id}>
                     <Video video={video} />
                   </Grid>
                 ))}
