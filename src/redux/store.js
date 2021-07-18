@@ -4,6 +4,7 @@ import homeVideosReducer from "./slices/homeVideosSlice";
 import watchScreenReducer from "./slices/watchScreenSlice";
 import searchScreenReducer from "./slices/searchScreenSlice";
 import subscriptionReducer from "./slices/subscriptionSlice";
+import channelReducer from "./slices/channelSlice";
 
 export default configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export default configureStore({
     watchScreen: watchScreenReducer,
     searchScreen: searchScreenReducer,
     subscriptionScreen: subscriptionReducer,
+    channelScreen: channelReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
