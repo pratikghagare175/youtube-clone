@@ -10,7 +10,7 @@ import VideoHorizontal from "../../videoHorizontal/VideoHorizontal";
 import Comments from "../../comments/Comments";
 import { useParams } from "react-router-dom";
 import { fetchRelatedVideos, fetchVideoById } from "../../../redux/slices/watchScreenSlice";
-import RelatedVideoSkeleton from "../../videoSkeleton/HorizontalSkeleton";
+import RelatedVideoSkeleton from "../../skeleton/HorizontalSkeleton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
