@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //https://i.ytimg.com/vi/bmVKaAV_7-A/hq720_live.jpg?sqp=CNjf1IUG-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAn49C9HjMqhp8iyQLJ1kCeHMvNuA
-const Video = ({ video }) => {
+const Video = ({ video,channelScreen }) => {
   const classes = useStyles();
 
   const [views, setViews] = useState(null);
@@ -74,12 +74,13 @@ const Video = ({ video }) => {
       title,
       thumbnails: { medium },
     },
+    contentDetails,
   } = video;
 
   const seconds = moment.duration(duration).asSeconds();
   const _duration = moment.utc(seconds * 1000).format("mm:ss");
 
-  const _videoId = id?.videoId || id;
+  const _videoId = id?.videoId || contentDetails?.videoId || id;
 
   //? To get Video details like views and time
   useEffect(() => {
@@ -133,9 +134,12 @@ const Video = ({ video }) => {
 
         <CardContent>
           <Grid container spacing={0}>
-            <Grid item xs={3}>
-              <Avatar key="hi" src={channelIcon} />
-            </Grid>
+            {!channelScreen && (
+              <Grid item xs={3}>
+                <Avatar key="hi" src={channelIcon} />
+              </Grid>
+            )}
+
             <Grid item xs={9}>
               <Tooltip title={title} TransitionComponent={Zoom} placement="bottom-end">
                 <Typography noWrap className={classes.heading} gutterBottom>
