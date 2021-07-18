@@ -13,6 +13,7 @@ import WatchScreen from "./components/pages/watchScreen/WatchScreen";
 import SearchScreen from "./components/pages/searchScreen/SearchScreen";
 import { useSelector } from "react-redux";
 import SubscriptionScreen from "./components/pages/subscriptionScreen/SubscriptionScreen";
+import ChannelScreen from "./components/pages/channelScreen/ChannelScreen";
 
 const useStyles = makeStyles((theme) => ({
   app_container: {
@@ -70,7 +71,13 @@ const App = () => {
 
       <Route path="/feed/subscriptions" exact>
         <Layout>
-          <SubscriptionScreen/>
+          <SubscriptionScreen />
+        </Layout>
+      </Route>
+
+      <Route path="/channel/:channelId" exact>
+        <Layout>
+          <ChannelScreen />
         </Layout>
       </Route>
 
