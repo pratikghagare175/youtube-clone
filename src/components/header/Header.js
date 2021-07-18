@@ -171,7 +171,7 @@ const Header = ({ handleToggleSidebar }) => {
   const path = location.pathname === "/";
 
   const handleSearch = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && searchText) {
       history.push(`/search/${searchText}`);
     }
   };
