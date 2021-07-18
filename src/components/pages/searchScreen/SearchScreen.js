@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchVideoBySearch } from "../../../redux/slices/searchScreenSlice";
 import VideoHorizontal from "../../videoHorizontal/VideoHorizontal";
-import SearchSkeleton from "../../videoSkeleton/SearchSkeleton";
+import SearchSkeleton from "../../skeleton/SearchSkeleton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
