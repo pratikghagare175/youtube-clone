@@ -96,7 +96,7 @@ const VideoMetaData = ({ video, videoId }) => {
       {/* Video Title And Views Section */}
       <Grid container style={{ marginBottom: "0.7rem" }}>
         <Grid item xs={11} style={{ marginBottom: "0.9rem" }}>
-          <Typography variant="h6" style={{ wordWrap: "break-word" }}>
+          <Typography variant="h6" style={{ wordWrap: "break-word",color:"#fff" }}>
             {video?.snippet.title}
           </Typography>
         </Grid>
