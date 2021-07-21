@@ -135,12 +135,17 @@ const Video = ({ video,channelScreen }) => {
         <CardContent>
           <Grid container spacing={0}>
             {!channelScreen && (
-              <Grid item xs={3}>
+              <Grid item xs={3} md={4} lg={3}>
                 <Avatar key="hi" src={channelIcon} />
               </Grid>
             )}
 
-            <Grid item xs={9}>
+            <Grid
+              item
+              xs={channelScreen ? 12 : 9}
+              md={channelScreen ? 12 : 9}
+              lg={channelScreen ? 12 : 9}
+            >
               <Tooltip title={title} TransitionComponent={Zoom} placement="bottom-end">
                 <Typography noWrap className={classes.heading} gutterBottom>
                   {title}
