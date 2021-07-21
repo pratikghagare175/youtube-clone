@@ -12,7 +12,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     width: "100%",
-    flex: "1 1 0",
+    marginTop: "-2.5rem",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "0",
+    },
   },
   card_grid: {
     flexGrow: 1,
@@ -35,7 +38,7 @@ const ChannelScreen = () => {
 
   return (
     <>
-      <Container>
+      <Container className={classes.root}>
         <Grid container>
           {!loading
             ? playlist.map((video) => (
