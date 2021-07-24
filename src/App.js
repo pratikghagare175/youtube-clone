@@ -45,9 +45,9 @@ const App = () => {
   const accessToken = useSelector((state) => state.auth.accessToken);
   const history = useHistory();
 
-  // if (!accessToken) {
-  //   history.push("/login");
-  // }
+  if (!accessToken) {
+    history.push("/login");
+  }
   return (
     <Switch>
       <Route path="/" exact>
