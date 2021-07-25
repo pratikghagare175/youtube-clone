@@ -213,7 +213,7 @@ const watchScreenSlice = createSlice({
       state.loading = true;
     },
     [addComments.fulfilled]: (state, action) => {
-      const { data } = action.payload;
+      
       state.loading = false;
     },
     [addComments.rejected]: (state, action) => {

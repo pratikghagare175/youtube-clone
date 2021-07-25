@@ -1,16 +1,9 @@
 import firebase from "firebase/app";
-import * as functions from "firebase-functions"
 import "firebase/auth";
 
-// let config = require("./env.json");
-let config = {};
-
-if (Object.keys(functions.config()).length) {
-  config = functions.config();
-}
 
 const firebaseConfig = {
-  apiKey: config.yt_clone.api_key,
+  apiKey: process.env.REACT_APP_YOUTUBE_API_KEY,
   authDomain: "clone-95ab3.firebaseapp.com",
   projectId: "clone-95ab3",
   storageBucket: "clone-95ab3.appspot.com",

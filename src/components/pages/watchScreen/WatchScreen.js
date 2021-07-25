@@ -11,6 +11,7 @@ import Comments from "../../comments/Comments";
 import { useParams } from "react-router-dom";
 import { fetchRelatedVideos, fetchVideoById } from "../../../redux/slices/watchScreenSlice";
 import RelatedVideoSkeleton from "../../skeleton/HorizontalSkeleton";
+import { Helmet } from "react-helmet";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +52,9 @@ const WatchScreen = () => {
 
   return (
     <div className={classes.root}>
+      <Helmet>
+        <title>{video?.snippet?.title}</title>
+      </Helmet>
       <Grid container>
         <Grid item xs={12} lg={8}>
           <Card className={classes.card}>

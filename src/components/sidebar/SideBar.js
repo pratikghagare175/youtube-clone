@@ -11,10 +11,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import SubscriptionIcon from "@material-ui/icons/Subscriptions";
 import LikedIcon from "@material-ui/icons/ThumbUp";
-import HistoryIcon from "@material-ui/icons/History";
-import LibraryIcon from "@material-ui/icons/LibraryBooks";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
 
 const drawerWidth = 200;
 
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
   drawer: {
     width: drawerWidth,
+    zIndex: theme.zIndex.modal + 1,
   },
 
   drawerOpen: {
@@ -65,7 +66,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#16181b",
   },
 
+  listText: {
+    color: "#7F8580",
+    fontWeight:"bold"
+  },
+
   iconList: {
+    textDecoration: "none",
     "&:hover": {
       backgroundColor: "#4c4c4c",
     },
@@ -78,6 +85,13 @@ const useStyles = makeStyles((theme) => ({
 
 const SideBar = ({ open }) => {
   const classes = useStyles();
+  const history = useHistory()
+  const dispatch = useDispatch()
+
+  const handleLogout = () =>{
+    dispatch(logout());
+    history.push("/login")
+  }
 
   return (
     <div>
@@ -99,44 +113,32 @@ const SideBar = ({ open }) => {
       >
         <div className={classes.toolbarMargin} />
         <List>
-          <ListItem className={classes.iconList}>
+          <ListItem className={classes.iconList} component={Link} to="/">
             <ListItemIcon>
               <HomeIcon className={classes.iconColor} />
             </ListItemIcon>
-            <ListItemText primary="Home" />
+            <ListItemText primary="Home" className={classes.listText} />
           </ListItem>
           <ListItem className={classes.iconList} component={Link} to="/feed/subscriptions">
             <ListItemIcon>
               <SubscriptionIcon className={classes.iconColor} />
             </ListItemIcon>
-            <ListItemText primary="Subscriptions" />
+            <ListItemText primary="Subscriptions" className={classes.listText} />
           </ListItem>
-          <ListItem className={classes.iconList}>
+          <ListItem className={classes.iconList} component={Link} to="/likedVideos">
             <ListItemIcon>
               <LikedIcon className={classes.iconColor} />
             </ListItemIcon>
-            <ListItemText primary="Liked Videos" />
-          </ListItem>
-          <ListItem className={classes.iconList}>
-            <ListItemIcon>
-              <HistoryIcon className={classes.iconColor} />
-            </ListItemIcon>
-            <ListItemText primary="History" />
-          </ListItem>
-          <ListItem className={classes.iconList}>
-            <ListItemIcon>
-              <LibraryIcon className={classes.iconColor} />
-            </ListItemIcon>
-            <ListItemText primary="Library" />
+            <ListItemText primary="Liked Videos" className={classes.listText} />
           </ListItem>
           <br />
           <br />
           <Divider />
-          <ListItem className={classes.iconList}>
+          <ListItem className={classes.iconList} button onClick={handleLogout}>
             <ListItemIcon>
               <LogoutIcon className={classes.iconColor} />
             </ListItemIcon>
-            <ListItemText primary="Logout" />
+            <ListItemText primary="Logout" className={classes.listText} />
           </ListItem>
           <Divider />
         </List>

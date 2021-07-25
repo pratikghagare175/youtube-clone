@@ -7,8 +7,6 @@ import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import Tooltip from "@material-ui/core/Tooltip";
-import Zoom from "@material-ui/core/Zoom";
 import moment from "moment";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useHistory } from "react-router-dom";
@@ -34,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
   imgDiv: {
     position: "relative",
-    width: "300px",
+    width: "220px",
     marginRight: 0,
     [theme.breakpoints.down("xs")]: {
       width: "150px",
@@ -86,7 +84,7 @@ const SubscriptionScreen = () => {
     dispatch(fetchSubscribedChannels());
   }, [dispatch]);
 
-  const { loading, subscriptions } = useSelector((state) => state.subscriptionScreen);
+  const {  subscriptions } = useSelector((state) => state.subscriptionScreen);
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("xs"));

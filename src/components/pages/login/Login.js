@@ -23,12 +23,20 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: theme.spacing(-10),
+    },
   },
 
   ytLogo: {
     width: "130px",
     height: "130px",
     objectFit: "contain",
+    [theme.breakpoints.down("xs")]: {
+      width: "100px",
+      height: "100px",
+      marginTop: theme.spacing(3),
+    },
   },
   card: {
     width: "400px",
@@ -36,11 +44,20 @@ const useStyles = makeStyles((theme) => ({
     background: "#16181B",
     textAlign: "center",
     borderRadius: "0.6rem",
+    [theme.breakpoints.down("xs")]: {
+      width: "300px",
+      height: "400px",
+    },
   },
 
   title: {
     color: "#ffffff",
     marginTop: theme.spacing(5),
+    padding: "0 12px",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: theme.spacing(3),
+      fontSize: "13px",
+    },
   },
 
   socialIcons: {

@@ -79,6 +79,11 @@ const Comments = ({ videoId, totalComments }) => {
   //? grab the comments from the store
   const comments = useSelector((state) => state.watchScreen.comments);
 
+  //? get profile image from reducer
+  const user = useSelector((state) => state.auth?.user);
+  const tempAvatar =
+    "https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png";
+
   const _comments = comments?.map((comment) => comment.snippet.topLevelComment.snippet);
 
   const postComment = () => {
@@ -114,7 +119,7 @@ const Comments = ({ videoId, totalComments }) => {
         <Grid item>
           <Avatar
             alt="Remy Sharp"
-            src="https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png"
+            src={user?.photoUrl || tempAvatar}
             className={classes.avatar}
           />
         </Grid>

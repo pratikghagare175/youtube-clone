@@ -14,6 +14,7 @@ import SearchScreen from "./components/pages/searchScreen/SearchScreen";
 import { useSelector } from "react-redux";
 import SubscriptionScreen from "./components/pages/subscriptionScreen/SubscriptionScreen";
 import ChannelScreen from "./components/pages/channelScreen/ChannelScreen";
+import LikedVideos from "./components/pages/likedVideos/LikedVideos";
 
 const useStyles = makeStyles((theme) => ({
   app_container: {
@@ -78,6 +79,12 @@ const App = () => {
       <Route path="/channel/:channelId" exact>
         <Layout>
           <ChannelScreen />
+        </Layout>
+      </Route>
+
+      <Route path="/likedVideos" exact>
+        <Layout>
+          <LikedVideos />
         </Layout>
       </Route>
 

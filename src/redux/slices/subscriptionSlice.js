@@ -9,6 +9,7 @@ export const fetchSubscribedChannels = createAsyncThunk(
         params: {
           part: "snippet,contentDetails",
           mine: true,
+          maxResults:10,
         },
         headers: {
           Authorization: `Bearer ${getState().auth.accessToken}`,

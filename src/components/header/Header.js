@@ -17,6 +17,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { fade } from "@material-ui/core/styles";
 import youtubeLogo from "../../assets/yt-logo.png";
 import CategoriesBar from "../categoriesBar/CategoriesBar";
+import { useSelector } from "react-redux";
 
 const ElevationScroll = (props) => {
   const { children } = props;
@@ -154,7 +155,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
 
-  categoryBar: {
+  categoriesBarStyle: {
     marginLeft: "230px",
     [theme.breakpoints.down("md")]: {
       display: "none",
@@ -174,6 +175,11 @@ const Header = ({ handleToggleSidebar }) => {
       history.push(`/search/${searchText}`);
     }
   };
+
+  const user = useSelector((state) => state.auth?.user);
+
+  const tempAvatar =
+    "https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png";
 
   return (
     <>
@@ -232,14 +238,10 @@ const Header = ({ handleToggleSidebar }) => {
                   <AppsIcon />
                 </IconButton>
               </div>
-              <Avatar
-                alt="Remy Sharp"
-                className={classes.avatar}
-                src="https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png"
-              />
+              <Avatar alt="Remy Sharp" className={classes.avatar} src={user?.photoUrl || tempAvatar} />
             </ToolBar>
 
-            <div className={classes.categoryBar}>{path && <CategoriesBar />}</div>
+            <div className={classes.categoriesBarStyle}>{path && <CategoriesBar />}</div>
           </AppBar>
           {/* <CategoriesBar /> */}
         </ElevationScroll>

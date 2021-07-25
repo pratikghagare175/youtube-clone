@@ -11,7 +11,6 @@ import VideoSkeleton from "../../skeleton/VideoSkeleton";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    // alignContent: "center",
     width: "100%",
   },
   card_grid: {
