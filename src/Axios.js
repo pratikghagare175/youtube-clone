@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as functions from "firebase-functions";
-let config = require("../env.json");
+let config = require("./env.json");
 
 if (Object.keys(functions.config()).length) {
   config = functions.config();

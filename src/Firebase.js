@@ -2,7 +2,7 @@ import firebase from "firebase/app";
 import * as functions from "firebase-functions"
 import "firebase/auth";
 
-let config = require("../env.json");
+let config = require("./env.json");
 
 if (Object.keys(functions.config()).length) {
   config = functions.config();
