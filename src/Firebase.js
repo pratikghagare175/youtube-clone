@@ -1,8 +1,15 @@
 import firebase from "firebase/app";
+import * as functions from "firebase-functions"
 import "firebase/auth";
 
+let config = require("../env.json");
+
+if (Object.keys(functions.config()).length) {
+  config = functions.config();
+}
+
 const firebaseConfig = {
-  apiKey: "AIzaSyB_av3P7N7GkbIlDRlE6JhwnBkwPLgpm5s",
+  apiKey: config.yt_clone.api_key,
   authDomain: "clone-95ab3.firebaseapp.com",
   projectId: "clone-95ab3",
   storageBucket: "clone-95ab3.appspot.com",
